@@ -1,0 +1,104 @@
+.container { 
+    position: relative;
+    overflow: hidden;   
+    width: 100vw;
+    height: 100vh;
+}
+ 
+.mainBackground {
+    position: absolute;  
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.header{ 
+    position: absolute;   
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items:center;
+  
+    top:23%;
+    left:50%;
+    transform:translate(-50%, -50%);   
+    min-width:700px;
+    min-height: 500px;
+     
+    width:500px; 
+
+    z-index: 2;      
+} 
+
+.mainLogo{ 
+    width:80%;
+}
+.character-wrap{
+    position: absolute;
+    top: 57%;
+    left: 52%; 
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width:400px;  
+}
+
+.character-wrap img{
+    width:100%;
+    height: 100%;
+}
+
+.speech-wrap{
+    position: absolute;
+    width:700px; 
+    top: 75%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    z-index: 3;  
+     
+}
+
+.speech-wrap img{ 
+    width:100%;
+    height: 100%;
+    
+}
+
+.character-name{
+    position:absolute;
+    font-family: 'Cafe24Ssurround';
+    transform: rotate(-8deg);
+    top:115px;
+    left:65px;
+}
+
+.speech-text{
+    position:absolute; 
+    top:160px;
+    left:110px; 
+    font-size:20px;
+    font-family: 'Cafe24Ssurround';
+}
+ 
+.selectBubble{ 
+    position: absolute; 
+    left:350px;
+    bottom:100px;
+    z-index: 3;
+}
+ 
+.select-text{
+    position:absolute;
+    font-family: 'Cafe24Ssurround';
+    z-index:4;
+    top:60px;
+    left:610px;
+    
+}
+ 
+.selected-gender-text {
+    color: black; /* 기본 색상 설정 */
+  }
+  
+  .selected-gender-text.selected {
+    color: blue; /* 선택된 경우의 색상 */
+  }
