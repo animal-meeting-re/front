@@ -1,0 +1,14 @@
+.gradient_button {
+    width: fit-content;
+    height: fit-content;
+    background-image: linear-gradient(to bottom right, rgb(121, 194, 152), rgb(247, 235, 183));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.gradient_button_content {
+    padding: 10px;
+    color: white;
+}
