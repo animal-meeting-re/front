@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { GENDER } from "../recoil/Atoms";
 import "./settingPage.css";
 
 const SettingPage = () => {
     const navigate = useNavigate();
-    const [selectedGender, setSelectedGender] = useState(null);
+    const [selectedGender, setSelectedGender] = useRecoilState(GENDER);
 
     return (
         <div className="container">
