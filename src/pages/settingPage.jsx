@@ -1,12 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { GENDER } from "../recoil/Atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { GENDER, MODEL_URL, METADATA_URL, WEIGHTS_URL } from "../recoil/Atoms";
 import "./settingPage.css";
 
 const SettingPage = () => {
     const navigate = useNavigate();
     const [selectedGender, setSelectedGender] = useRecoilState(GENDER);
+    const setModelURL = useSetRecoilState(MODEL_URL);
+    const setMetadataURL = useSetRecoilState(METADATA_URL);
+    const setWeightsURL = useSetRecoilState(WEIGHTS_URL);
 
     return (
         <div className="container">
@@ -36,6 +39,9 @@ const SettingPage = () => {
                     <div className="select-text">
                         <p
                             onClick={() => {
+                                setModelURL(process.env.PUBLIC_URL + "/models/girl/model.json");
+                                setMetadataURL(process.env.PUBLIC_URL + "/models/girl/metadata.json");
+                                setWeightsURL(process.env.PUBLIC_URL + "/models/girl/weights.bin");
                                 navigate("/test");
                             }}
                             onMouseEnter={() => setSelectedGender("여자")}
@@ -50,6 +56,9 @@ const SettingPage = () => {
                         </p>
                         <p
                             onClick={() => {
+                                setModelURL(process.env.PUBLIC_URL + "/models/boy/model.json");
+                                setMetadataURL(process.env.PUBLIC_URL + "/models/boy/metadata.json");
+                                setWeightsURL(process.env.PUBLIC_URL + "/models/boy/weights.bin");
                                 navigate("/test");
                             }}
                             onMouseEnter={() => setSelectedGender("남자")}

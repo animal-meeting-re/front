@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SettingPage from "./pages/settingPage";
+import SettingPage from "./pages/settingPage.jsx";
 import AnimalTestPage from "./pages/AnimalTestPage";
 
 function App() {
