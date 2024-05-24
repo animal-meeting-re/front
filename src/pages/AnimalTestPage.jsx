@@ -185,6 +185,7 @@ const AnimalTestPage = (props) => {
         <div className="main_container">
             <div className="screen_container">
                 <div className="center_container">
+                    
                     <div className="header_container">
                         <GradientButton
                             content="Ai Animal Test"
