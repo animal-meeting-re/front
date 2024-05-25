@@ -1,0 +1,72 @@
+.noticeboard-container {
+    position: fixed;
+    display: flex; 
+    align-items: center;
+    border-radius: 40px;
+    background-color: white;
+    flex-direction: column;
+    width: 420px;
+    height: 760px;
+    overflow: hidden;
+}
+
+.noticeboard-header {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 75, 75, 1);
+    color: white;
+    font-size: 20px;
+    font-family: "Cafe24Ssurround";
+    width: 100%;  
+}
+
+.noticeboard-main {  
+    width: 100%;
+    font-family: "Cafe24Ssurround";
+}
+
+.noticeboard-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 13%;
+    font-size: 18px;
+    font-family: "Cafe24Ssurround";
+}
+
+.noticeboard-animal {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding: 5%;
+    background-color: rgba(255, 75, 75, 1);
+    color: white;
+    font-size: 20px; 
+}
+
+
+.noticeboard-woman, .noticeboard-man {
+    display: flex; 
+    justify-content: center; 
+    flex-direction: column;
+    padding-top:20px;
+    padding-left:80px;
+    padding-right:70px;
+    font-family: "Cafe24Ssurround";
+}
+
+.woman-animal-wrapper, .man-animal-wrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; 
+    width: 100%;
+}
+
+.woman-animal-wrapper img, .man-animal-wrapper img {
+    margin: 5px;
+    width: 80px;
+}

@@ -1,52 +1,83 @@
-.container {  
-    background-image: url("../../public/img/mainBackgroundSplit.png");
-    background-size: cover;  
-    background-repeat: no-repeat;  
-    background-position: center;   
+.container {
+    position: relative;
     width: 100vw;
-    height: 100vh; 
-    display: flex;  
-    justify-content: center;  
-    align-items: center;  
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;  
+    background-color:whitesmoke;
 }
  
-.content-wrapper {
+.container::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0; 
+    /*background-image: url("../../public/img/mainBackgroundSplit.png");*/
+     
+    background-size: cover;
+    background-repeat: no-repeat; 
+    z-index: -1;  
+}
+
+.noticeboard-wrapper {  
+    left:1320px;
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;  
+    position: fixed;   
+}
+
+.participant-wrapper{ 
+    left:230px;
+    z-index:6;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:fixed; 
+}
+.content-wrapper { 
+    background-color: yellow;
     display: flex;
     flex-direction: column;
     justify-content: space-between;  
     align-items: center;
-    position: relative; 
-    max-width: 40%;
-    max-height: 100vh;
-    width: 40%;
-    height: 100%; 
-    z-index: 6;
-} 
-.header, .main  {
+    position:fixed;
+    top:0px;
+    left:480px; 
+    width: 600px;
+    height: 1000px; 
+    z-index: 2;  
+}
+
+.header, .main  { 
     flex: 1;  
     max-height: calc(35% - 5px);   
     width: 100%; 
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-   
 
-.mainLogo {
-    margin-top:120px;
-    width:450px;
-} 
-
-.main{
-    top:10px;
-    flex-direction:column;
+.main { 
+    margin-top: 710px;
 }
+   
+.header {}
+
+.mainLogo { 
+    width: 450px;
+} 
  
 .character-wrap {     
-    width:300px;
-    position:absolute;
-    z-index:4;
-    bottom:15%;
+    width: 300px;
+    position: absolute;
+    z-index: 4;
+    bottom: 15%;
 }
 
 .character-wrap img { 
@@ -54,26 +85,24 @@
 }
 
 .speech-wrap {   
-    width:600px; 
-    position:absolute;
-    z-index:5; 
+    width: 600px; 
+    position: absolute;
+    z-index: 5; 
 }
 
 .speech-wrap img {
     width: 100%; 
 }
 
-.select-wrap{
-    position:absolute;
-    z-index:6;  
-    width:200px;
-    top:400px;
-    left:270px;
+.select-wrap {
+    position: absolute;
+    z-index: 6;  
+    width: 200px;
+    top: 40%;
+    left: 50%;
 }
+ 
 
-.selectBubble{
-    width:
-}
 .character-name {
     position: absolute;
     font-family: "Cafe24Ssurround";
@@ -85,15 +114,14 @@
 
 .speech-text { 
     position: absolute;  
-    top:130px;
-    left:110px;
-    font-size:20px;
+    top: 130px;
+    left: 110px;
+    font-size: 20px;
     font-family: "Cafe24Ssurround";
 }
 
 .selectBubble { 
     left: 350px;
-
     top: 300px;
     z-index: 5;
     width: 550px;
@@ -103,7 +131,7 @@
     position: absolute;
     font-family: "Cafe24Ssurround";
     z-index: 5; 
-    width:100px;
+    width: 100px;
     top: 185px;
     left: 258px;
     cursor: pointer;
@@ -116,3 +144,5 @@
 .selected-gender-text.selected {
     color: blue; /* 선택된 경우의 색상 */
 }
+
+ 

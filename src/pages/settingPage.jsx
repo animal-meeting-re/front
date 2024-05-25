@@ -2,8 +2,34 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { GENDER, MODEL_URL, METADATA_URL, WEIGHTS_URL } from "../recoil/Atoms";
+import {useMediaQuery} from 'react-responsive';
+import NoticeBoard from '../components/NoticeBoard';
+import Statistic from "../components/Statistic";
 import "./settingPage.css";
 
+export const Row = ({children}) => {
+  const isRow = useMediaQuery({
+    query:"(max-width:2000px)"
+  });
+  return <>{isRow && children}</>
+}
+
+export const Column = ({children}) => {
+  const isColumn = useMediaQuery({
+    query:"(max-width:1000px)"
+  });
+  return <>{isColumn && children}</>
+}
+/*
+function App () {
+  return (
+    <>
+    	<Row> Row </Row>
+    	<Column> Column </Column>
+    </>
+  )
+}
+*/
 const TypingText = ({ text, onFinish }) => {
   const [displayText, setDisplayText] = useState("");
 
@@ -33,11 +59,14 @@ const SettingPage = () => {
   const [isPreviousTypingFinished, setPreviousTypingFinished] = useState(false);
 
   const handlePreviousTypingFinish = () => {
-    setPreviousTypingFinished(true); // 첫 번째 타이핑 완료 상태를 설정
+    setPreviousTypingFinished(true);  
   };
 
   return (
     <div className="container">
+       <div className="participant-wrapper">
+        <Statistic count="8" most_woman_animal="토끼상" most_man_animal="늑대상" most_woman_path="rabbit-woman" most_man_path="wolf"/>
+      </div>
       <div className="content-wrapper">
         <div className="header">
           <img className="mainLogo" src={`${process.env.PUBLIC_URL}/img/mainLogo.png`} />
@@ -112,6 +141,10 @@ const SettingPage = () => {
           </div>
         </div>
       </div>
+      <div className="noticeboard-wrapper">
+        <NoticeBoard  />
+      </div>
+       
     </div>
   );
 };
