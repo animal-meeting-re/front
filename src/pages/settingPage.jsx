@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { GENDER, MODEL_URL, METADATA_URL, WEIGHTS_URL } from "../recoil/Atoms";
-import {useMediaQuery} from 'react-responsive';
-import NoticeBoard from '../components/NoticeBoard';
+import { useMediaQuery } from "react-responsive";
+import NoticeBoard from "../components/NoticeBoard";
 import Statistic from "../components/Statistic";
 import "./settingPage.css";
 
@@ -31,23 +31,23 @@ function App () {
 }
 */
 const TypingText = ({ text, onFinish }) => {
-  const [displayText, setDisplayText] = useState("");
+    const [displayText, setDisplayText] = useState("");
 
-  useEffect(() => {
-    let currentIndex = 0;
-    const interval = setInterval(() => {
-      if (currentIndex <= text.length) {
-        setDisplayText(text.substring(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(interval);
-        if (typeof onFinish === 'function') onFinish();
-      }
-    }, 50);
-    return () => clearInterval(interval);
-  }, [text, onFinish]);
+    useEffect(() => {
+        let currentIndex = 0;
+        const interval = setInterval(() => {
+            if (currentIndex <= text.length) {
+                setDisplayText(text.substring(0, currentIndex));
+                currentIndex++;
+            } else {
+                clearInterval(interval);
+                if (typeof onFinish === "function") onFinish();
+            }
+        }, 50);
+        return () => clearInterval(interval);
+    }, [text, onFinish]);
 
-  return <span>{displayText}</span>;
+    return <span>{displayText}</span>;
 };
 
 const SettingPage = () => {
@@ -57,6 +57,7 @@ const SettingPage = () => {
     const setMetadataURL = useSetRecoilState(METADATA_URL);
     const setWeightsURL = useSetRecoilState(WEIGHTS_URL);
     const [isPreviousTypingFinished, setPreviousTypingFinished] = useState(false);
+
     const isRow = useMediaQuery({
       query:"(max-width:2000px)"
     });
@@ -118,7 +119,7 @@ const SettingPage = () => {
                     setWeightsURL(process.env.PUBLIC_URL + "/models/girl/weights.bin");
                     navigate("/test");
                   }}
-                  onMouseEnter={() => setSelectedGender("여자")}
+                  onMouseEnter={() => setSelectedGender("FEMALE")}
                   onMouseLeave={() => setSelectedGender(null)}
                   className={
                     selectedGender === "여자"
@@ -135,7 +136,7 @@ const SettingPage = () => {
                     setWeightsURL(process.env.PUBLIC_URL + "/models/boy/weights.bin");
                     navigate("/test");
                   }}
-                  onMouseEnter={() => setSelectedGender("남자")}
+                  onMouseEnter={() => setSelectedGender("MALE")}
                   onMouseLeave={() => setSelectedGender(null)}
                   className={
                     selectedGender === "남자"
@@ -147,8 +148,8 @@ const SettingPage = () => {
                 </p>
               </div>
             </div>
-          </div>
         </div>
+
         {!isRow && (
           <div className="noticeboard-wrapper">
             <NoticeBoard  />
