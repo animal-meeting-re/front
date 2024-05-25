@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Button,
     ButtonGroup,
@@ -31,6 +31,12 @@ const RegistrationForm = (props) => {
     const [resultImageUrl, setResultImageUrl] = useState("");
     const [resultImageFile, setResultImageFile] = useState(null);
     const [loading, setLoading] = useState(false); // Add loading state
+
+    useEffect(() => {
+        if (!props.showRotatingImage) {
+            screenshot();
+        }
+    }, [props.showRotatingImage]);
 
     async function screenshot() {
         const canvas = await html2canvas(document.body);
@@ -103,7 +109,7 @@ const RegistrationForm = (props) => {
             <ModalTrigger>
                 <GradientButton
                     onClick={() => {
-                        screenshot();
+                        props.setShowRotatingImage(false);
                     }}
                     content="등록"
                     buttonStyle={{
@@ -155,6 +161,7 @@ const RegistrationForm = (props) => {
                                     onClick={() => {
                                         setStudentId("");
                                         setResultImageUrl("");
+                                        props.setShowRotatingImage(true);
                                     }}
                                 />
                             </ModalClose>
@@ -179,6 +186,7 @@ const RegistrationForm = (props) => {
                                             setStudentId("");
                                             setResultImageUrl("");
                                         }
+                                        props.setShowRotatingImage(true);
                                     }}
                                 />
                             </ModalClose>
