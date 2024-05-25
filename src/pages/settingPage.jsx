@@ -117,7 +117,7 @@ const SettingPage = () => {
                                 onMouseEnter={() => setSelectedGender("FEMALE")}
                                 onMouseLeave={() => setSelectedGender(null)}
                                 className={
-                                    selectedGender === "여자"
+                                    selectedGender === "FEMALE"
                                         ? "pointer selected-gender-text selected"
                                         : "pointer selected-gender-text"
                                 }
@@ -134,7 +134,7 @@ const SettingPage = () => {
                                 onMouseEnter={() => setSelectedGender("MALE")}
                                 onMouseLeave={() => setSelectedGender(null)}
                                 className={
-                                    selectedGender === "남자"
+                                    selectedGender === "MALE"
                                         ? "pointer selected-gender-text selected"
                                         : "pointer selected-gender-text"
                                 }
