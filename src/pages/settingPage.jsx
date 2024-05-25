@@ -48,11 +48,17 @@ const SettingPage = () => {
     const setMetadataURL = useSetRecoilState(METADATA_URL);
     const setWeightsURL = useSetRecoilState(WEIGHTS_URL);
     const [isPreviousTypingFinished, setPreviousTypingFinished] = useState(false);
-    const isRow = useMediaQuery({
-        query: "(max-width:2000px)",
-    });
+
+    useEffect(() => {
+        setSelectedGender(null);
+    }, []);
+
     const isColumn = useMediaQuery({
-        query: "(max-width:1000px)",
+        query: "(max-aspect-ratio: 1/1)",
+    });
+
+    const isRow = useMediaQuery({
+        query: "(min-aspect-ratio: 1/1)",
     });
 
     const handlePreviousTypingFinish = () => {
@@ -62,7 +68,7 @@ const SettingPage = () => {
     return (
         <div className="container">
             <div className="participant-wrapper">
-                {!isRow && (
+                {isRow && (
                     <Statistic
                         count="8"
                         most_woman_animal="토끼상"
@@ -145,7 +151,7 @@ const SettingPage = () => {
                     </div>
                 </div>
             </div>
-            {!isRow && (
+            {isRow && (
                 <div className="noticeboard-wrapper">
                     <NoticeBoard />
                 </div>
