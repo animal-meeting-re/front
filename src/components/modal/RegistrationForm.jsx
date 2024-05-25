@@ -24,11 +24,13 @@ import { getAnimalTypeByIndex } from "../../data/animalData";
 import { sendResultImage } from "../../api";
 import html2canvas from "html2canvas";
 import { dataURLtoBlob } from "../../utils/FileUtil";
+import { RingLoader } from "react-spinners";
 
 const RegistrationForm = (props) => {
     const [studentId, setStudentId] = useState("");
-    const [resultImageUrl, setResultImageUrl] = useState();
-    const [resultImageFile, setResultImageFile] = useState();
+    const [resultImageUrl, setResultImageUrl] = useState("");
+    const [resultImageFile, setResultImageFile] = useState(null);
+    const [loading, setLoading] = useState(false); // Add loading state
 
     async function screenshot() {
         const canvas = await html2canvas(document.body);
@@ -41,28 +43,63 @@ const RegistrationForm = (props) => {
     }
 
     async function handleRegister() {
-        try {
-            const formData = new FormData();
-            formData.append("studentId", studentId);
-            formData.append("animalType", getAnimalTypeByIndex(props.resultIndex));
-            formData.append("gender", props.gender);
+        setLoading(true); // Set loading to true before sending request
+        const formData = new FormData();
+        formData.append("studentId", studentId);
+        formData.append("animalType", getAnimalTypeByIndex(props.gender, props.resultIndex));
+        formData.append("gender", props.gender);
+
+        if (props.gender === "MALE") {
             formData.append("dogScore", props.bar1Percentage);
             formData.append("catScore", props.bar2Percentage);
-            formData.append("rabbitScore", props.bar3Percentage);
+            formData.append("bearScore", props.bar3Percentage);
             formData.append("dinosaurScore", props.bar4Percentage);
-            formData.append("bearScore", props.bar5Percentage);
-            formData.append("wolfScore", props.bar6Percentage);
+            formData.append("wolfScore", props.bar5Percentage);
+            formData.append("rabbitScore", props.bar6Percentage);
             formData.append("animalPhoto", resultImageFile);
-            const result = await sendResultImage(props.gender, formData);
-            console.log("Result image sent successfully:", result);
-            return result;
-        } catch (error) {
-            console.error("Error sending result image:", error);
+        } else {
+            formData.append("dogScore", props.bar1Percentage);
+            formData.append("catScore", props.bar2Percentage);
+            formData.append("desertFoxScore", props.bar3Percentage);
+            formData.append("rabbitScore", props.bar4Percentage);
+            formData.append("deerScore", props.bar5Percentage);
+            formData.append("hamsterScore", props.bar6Percentage);
+            formData.append("animalPhoto", resultImageFile);
+        }
+        try {
+            const res = await sendResultImage(props.gender, formData);
+            if (res.status === 200) {
+                alert("등록이 완료되었습니다!");
+            } else {
+                alert("등록에 실패했습니다. 관리자에게 문의하세요");
+            }
+        } catch {
+            alert("등록에 실패했습니다. 관리자에게 문의하세요");
+        } finally {
+            setLoading(false); // Set loading to false after request is complete
         }
     }
 
     return (
         <Modal>
+            {loading && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "rgba(255, 255, 255, 0.6)",
+                        zIndex: 999,
+                    }}
+                >
+                    <RingLoader color="#36D7B7" size={100} />
+                </div>
+            )}
             <ModalTrigger>
                 <GradientButton
                     onClick={() => {
@@ -117,6 +154,7 @@ const RegistrationForm = (props) => {
                                     text="취소"
                                     onClick={() => {
                                         setStudentId("");
+                                        setResultImageUrl("");
                                     }}
                                 />
                             </ModalClose>
@@ -133,15 +171,13 @@ const RegistrationForm = (props) => {
                                     confirmDescription={`정말로 등록하시겠습니까??`}
                                     confirmButtonColor={ButtonColorVariant.Blue}
                                     onClick={() => {
-                                        if (studentId.length != 8) {
+                                        if (studentId.length !== 8) {
                                             alert("8자리 학번을 입력해주세요");
                                             setStudentId("");
                                         } else {
-                                            handleRegister().then((res) => {
-                                                console.log(res);
-                                                alert("등록이 완료되었습니다!");
-                                            });
+                                            handleRegister();
                                             setStudentId("");
+                                            setResultImageUrl("");
                                         }
                                     }}
                                 />
