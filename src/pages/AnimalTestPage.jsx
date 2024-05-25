@@ -6,6 +6,7 @@ import NoticeBoard from "../components/NoticeBoard";
 import GradientButton from "../components/base/GradientButton";
 import PercentageBar from "../components/base/PercentageBar";
 import RegistrationForm from "../components/modal/RegistrationForm";
+import RotatingImage from "../components/base/RotatingImage";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { GENDER, MODEL_URL, METADATA_URL, WEIGHTS_URL } from "../recoil/Atoms";
 import { getAnimalTypeDetailsByIndex } from "../data/animalData";
@@ -39,6 +40,8 @@ const AnimalTestPage = () => {
     const [resultIndex, setResultIndex] = useState(0);
     const [isFinished, setIsFinished] = useState(false);
     const [animalData, setAnimalData] = useState();
+
+    const [showRotatingImage, setShowRotatingImage] = useState(true);
 
     useEffect(() => {
         if (gender == null) {
@@ -229,31 +232,65 @@ const AnimalTestPage = () => {
                                 bar4Percentage={bar4Percentage}
                                 bar5Percentage={bar5Percentage}
                                 bar6Percentage={bar6Percentage}
+                                showRotatingImage={showRotatingImage}
+                                setShowRotatingImage={setShowRotatingImage}
                             />
                         </div>
                     </div>
-                    <div className="webcam_container" style={{ position: "relative" }}>
+                    <div className="webcam_container">
                         {isFinished ? (
                             <div
                                 style={{
+                                    width: "100%",
+                                    height: "100%",
                                     textAlign: "center",
                                     backgroundColor: "white",
                                     padding: "20px",
                                     borderRadius: "10px",
                                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
                                     border: "1px solid rgba(0, 0, 0, 0.1)",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    justifyContent: "center",
                                 }}
                             >
-                                <img
-                                    src={process.env.PUBLIC_URL + animalData.image}
-                                    alt={animalData.type}
-                                    style={{
-                                        maxWidth: "90%",
-                                        maxHeight: "50%",
-                                        borderRadius: "20px",
-                                        border: "5px solid gainsboro",
-                                    }}
-                                />
+                                {showRotatingImage ? (
+                                    <RotatingImage
+                                        height="24vh"
+                                        width="24vh"
+                                        front={process.env.PUBLIC_URL + animalData.image}
+                                        back={process.env.PUBLIC_URL + animalData.subImage}
+                                    />
+                                ) : (
+                                    <span>
+                                        <img
+                                            src={process.env.PUBLIC_URL + animalData.image}
+                                            alt={animalData.type}
+                                            style={{
+                                                width: "24vh",
+                                                height: "24vh",
+                                                objectFit: "cover",
+                                                borderRadius: "20px",
+                                                border: "5px solid gainsboro",
+                                                marginRight: "10px",
+                                            }}
+                                        />
+                                        <img
+                                            src={process.env.PUBLIC_URL + animalData.subImage}
+                                            alt={animalData.type}
+                                            style={{
+                                                width: "24vh",
+                                                height: "24vh",
+                                                objectFit: "cover",
+                                                borderRadius: "20px",
+                                                border: "5px solid gainsboro",
+                                                marginLeft: "10px",
+                                            }}
+                                        />
+                                    </span>
+                                )}
+
                                 <p style={{ fontSize: "1.8rem", marginTop: "15px", fontWeight: "bold", color: "#333" }}>
                                     {animalData && animalData.type}
                                 </p>
@@ -313,7 +350,7 @@ const AnimalTestPage = () => {
                             <div
                                 style={{
                                     position: "absolute",
-                                    top: "50%",
+                                    top: "40%",
                                     left: "50%",
                                     transform: "translate(-50%, -50%)",
                                     fontSize: "5rem",
@@ -329,7 +366,7 @@ const AnimalTestPage = () => {
                             <div
                                 style={{
                                     position: "absolute",
-                                    top: "50%",
+                                    top: "40%",
                                     left: "50%",
                                     transform: "translate(-50%, -50%)",
                                     fontSize: "5rem",
