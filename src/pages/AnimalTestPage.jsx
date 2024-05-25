@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import GradientButton from "../components/GradientButton";
+import GradientButton from "../components/base/GradientButton";
+import PercentageBar from "../components/base/PercentageBar";
 import Webcam from "react-webcam";
-import PercentageBar from "../components/PercentageBar";
 import * as tmImage from "@teachablemachine/image";
 import { useRecoilValue } from "recoil";
 import { GENDER, MODEL_URL, METADATA_URL, WEIGHTS_URL } from "../recoil/Atoms";
@@ -185,7 +185,6 @@ const AnimalTestPage = (props) => {
         <div className="main_container">
             <div className="screen_container">
                 <div className="center_container">
-                    
                     <div className="header_container">
                         <GradientButton
                             content="Ai Animal Test"
