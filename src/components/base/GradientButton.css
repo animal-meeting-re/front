@@ -1,7 +1,7 @@
 .gradient_button {
     width: fit-content;
     height: fit-content;
-    background-image: linear-gradient(to bottom right, rgb(121, 194, 152), rgb(247, 235, 183));
+    background-image: linear-gradient(to bottom right, rgb(255, 167, 163), rgb(255, 201, 153));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,6 +10,8 @@
 }
 
 .gradient_button_content {
+    font-family: "Cafe24Ssurround";
+    font-size: 1.4rem;
     padding: 10px;
     color: white;
 }
