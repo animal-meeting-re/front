@@ -1,16 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
-import SettingPage from './pages/settingPage';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BezierProvider, LightFoundation } from "@channel.io/bezier-react";
+import SettingPage from "./pages/settingPage.jsx";
+import AnimalTestPage from "./pages/AnimalTestPage";
 
 function App() {
-  return (
-    <>
-    <div className = "h-screen w-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...">
-      <SettingPage/>
-    </div>
-    </>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<SettingPage />} />
+                <Route
+                    path="/test"
+                    element={
+                        <BezierProvider foundation={LightFoundation}>
+                            <AnimalTestPage />
+                        </BezierProvider>
+                    }
+                />
+            </Routes>
+        </BrowserRouter>
+    );
 }
-
 
 export default App;
