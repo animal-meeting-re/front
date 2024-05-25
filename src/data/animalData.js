@@ -1,9 +1,9 @@
 import animalTypes from "./animalTypes.json";
 
 export const getAnimalTypeByGender = (gender) => {
-    if (gender === "MALE") {
+    if (gender == "MALE") {
         return animalTypes.male.animalTypes;
-    } else if (gender === "FEMALE") {
+    } else if (gender == "FEMALE") {
         return animalTypes.female.animalTypes;
     } else {
         throw new Error("Invalid gender");
@@ -33,5 +33,5 @@ export const getAnimalTypeDetailsByIndex = (gender, index) => {
 
 export const getAnimalTypeByIndex = (gender, index) => {
     const animalDetails = getAnimalTypeDetailsByIndex(gender, index);
-    return animalDetails.type;
+    return animalDetails.typeEnglish;
 };
