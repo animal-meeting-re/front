@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const GENDER = atom({
     key: "gender",
-    default: "MALE",
+    default: null,
 });
 
 export const MODEL_URL = atom({
