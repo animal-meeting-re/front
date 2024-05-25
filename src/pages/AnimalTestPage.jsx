@@ -197,6 +197,18 @@ const AnimalTestPage = () => {
                             <div style={{ marginRight: "5px" }}>
                                 <GradientButton
                                     onClick={() => {
+                                        setResultIndex((resultIndex + 1) % 6);
+                                    }}
+                                    content="TEST"
+                                    buttonStyle={{
+                                        fontSize: "1rem",
+                                        fontWeight: "800",
+                                    }}
+                                />
+                            </div>
+                            <div style={{ marginRight: "5px" }}>
+                                <GradientButton
+                                    onClick={() => {
                                         setIsFinished(false);
                                         startPredicting();
                                     }}
