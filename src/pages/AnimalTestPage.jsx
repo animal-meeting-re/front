@@ -5,7 +5,10 @@ import Webcam from "react-webcam";
 import * as tmImage from "@teachablemachine/image";
 import { useRecoilValue } from "recoil";
 import { GENDER, MODEL_URL, METADATA_URL, WEIGHTS_URL } from "../recoil/Atoms";
+import RegistrationForm from "../components/modal/RegistrationForm";
+import { fetchFile } from "../utils/FileUtil";
 import "./AnimalTestPage.css";
+import { getAnimalTypeDetailsByIndex } from "../data/animalData";
 
 const AnimalTestPage = (props) => {
     const gender = useRecoilValue(GENDER);
@@ -25,46 +28,15 @@ const AnimalTestPage = (props) => {
     const [metadataFile, setMetadataFile] = useState();
 
     const [model, setModel] = useState();
+    const [modelLoadStatus, setModelLoadStatus] = useState(false);
     const webcamRef = useRef(null);
 
     const [countdown, setCountdown] = useState(0);
     const [cumulativePredictions, setCumulativePredictions] = useState([0, 0, 0, 0, 0, 0]);
     const [startMessage, setStartMessage] = useState("");
-    const [highestIndex, setHighestIndex] = useState(0);
-    const [highestAnimal, setHighestAnimal] = useState(null);
-
+    const [resultIndex, setResultIndex] = useState(0);
     const [isFinished, setIsFinished] = useState(false);
-
-    const animalData = {
-        0: {
-            image: process.env.PUBLIC_URL + "/img/resultImg/girl_dog.jpg",
-            info: "Dogs are loyal and friendly.",
-        },
-        1: {
-            image: process.env.PUBLIC_URL + "/img/resultImg/girl_cat.jpg",
-            info: "Cats are independent and curious.",
-        },
-        2: {
-            image: process.env.PUBLIC_URL + "/img/resultImg/girl_fox.jpg",
-            info: "Foxes are clever and quick.",
-        },
-        3: {
-            image: process.env.PUBLIC_URL + "/img/resultImg/girl_rabbit.jpg",
-            info: "Rabbits are gentle and quiet.",
-        },
-        4: {
-            image: process.env.PUBLIC_URL + "/img/resultImg/girl_deer.jpg",
-            info: "Deers are graceful and serene.",
-        },
-        5: {
-            image: process.env.PUBLIC_URL + "/img/resultImg/girl_tuttle.jpg", // change hamster
-            info: "Hamsters are small and energetic.",
-        },
-    };
-
-    useEffect(() => {
-        console.log("ISFINISHED : ", isFinished);
-    }, [isFinished]);
+    const [animalData, setAnimalData] = useState();
 
     useEffect(() => {
         loadFiles();
@@ -78,8 +50,31 @@ const AnimalTestPage = (props) => {
     }, [modelFile, weightsFile, metadataFile]);
 
     useEffect(() => {
+        updateCumulativePredictions();
+    }, [cumulativePredictions]);
+
+    useEffect(() => {
+        setAnimalData(getAnimalTypeDetailsByIndex(gender, resultIndex));
+    }, [resultIndex]);
+
+    function initStatus() {
+        setCumulativePredictions([0, 0, 0, 0, 0, 0]);
+        setBar1Percentage(0);
+        setBar2Percentage(0);
+        setBar3Percentage(0);
+        setBar4Percentage(0);
+        setBar5Percentage(0);
+        setBar6Percentage(0);
+        setResultIndex(0);
+    }
+
+    function updateCumulativePredictions() {
         const sum = cumulativePredictions.reduce((a, b) => a + b, 0);
         const normalizedPredictions = cumulativePredictions.map((value) => (value / sum) * 100);
+
+        if (sum === 0) {
+            return;
+        }
 
         let maxIndex = 0;
         let maxPred = 0;
@@ -89,23 +84,13 @@ const AnimalTestPage = (props) => {
                 maxPred = predict;
             }
         });
-        setHighestIndex(maxIndex);
+        setResultIndex(maxIndex);
         setBar1Percentage(Math.floor(normalizedPredictions[0]));
         setBar2Percentage(Math.floor(normalizedPredictions[1]));
         setBar3Percentage(Math.floor(normalizedPredictions[2]));
         setBar4Percentage(Math.floor(normalizedPredictions[3]));
         setBar5Percentage(Math.floor(normalizedPredictions[4]));
         setBar6Percentage(Math.floor(normalizedPredictions[5]));
-    }, [cumulativePredictions]);
-
-    useEffect(() => {
-        console.log(highestIndex);
-    }, [highestIndex]);
-
-    async function fetchFile(url, fileName) {
-        const response = await fetch(url);
-        const data = await response.blob();
-        return new File([data], fileName);
     }
 
     async function loadFiles() {
@@ -135,33 +120,25 @@ const AnimalTestPage = (props) => {
     }
 
     function startPredicting() {
-        loadModel();
-        setIsFinished(false);
-        setCumulativePredictions([0, 0, 0, 0, 0, 0]);
-        setBar1Percentage(0);
-        setBar2Percentage(0);
-        setBar3Percentage(0);
-        setBar4Percentage(0);
-        setBar5Percentage(0);
-        setBar6Percentage(0);
-        setHighestAnimal(null);
-
-        let countdownTime = 3;
-        setCountdown(countdownTime);
-        setStartMessage("");
-
-        const countdownInterval = setInterval(() => {
-            countdownTime -= 1;
+        loadModel().then(() => {
+            initStatus();
+            let countdownTime = 3;
             setCountdown(countdownTime);
-            if (countdownTime <= 0) {
-                clearInterval(countdownInterval);
-                setStartMessage("START!");
-                setTimeout(() => {
-                    setStartMessage("");
-                    startPredictProcess();
-                }, 1000);
-            }
-        }, 1000);
+            setStartMessage("");
+
+            const countdownInterval = setInterval(() => {
+                countdownTime -= 1;
+                setCountdown(countdownTime);
+                if (countdownTime <= 0) {
+                    clearInterval(countdownInterval);
+                    setStartMessage("START!");
+                    setTimeout(() => {
+                        setStartMessage("");
+                        startPredictProcess();
+                    }, 1000);
+                }
+            }, 1000);
+        });
     }
 
     function startPredictProcess() {
@@ -196,30 +173,49 @@ const AnimalTestPage = (props) => {
                     </div>
                     <div className="option_container">
                         <GradientButton
-                            onClick={startPredicting}
+                            onClick={() => {
+                                setIsFinished(false);
+                                startPredicting();
+                            }}
                             content="시작"
                             buttonStyle={{
                                 fontSize: "1rem",
                                 fontWeight: "800",
                             }}
                         />
+                        <RegistrationForm
+                            resultIndex={resultIndex}
+                            gender={gender}
+                            bar1Percentage={bar1Percentage}
+                            bar2Percentage={bar2Percentage}
+                            bar3Percentage={bar3Percentage}
+                            bar4Percentage={bar4Percentage}
+                            bar5Percentage={bar5Percentage}
+                            bar6Percentage={bar6Percentage}
+                        />
                     </div>
                     <div className="webcam_container" style={{ position: "relative" }}>
                         {isFinished ? (
                             <div style={{ textAlign: "center" }}>
                                 <img
-                                    src={animalData[highestIndex].image}
-                                    alt={highestIndex}
-                                    style={{ width: "50%", borderRadius: "20px" }}
+                                    src={process.env.PUBLIC_URL + animalData.image}
+                                    alt={animalData.type}
+                                    style={{ height: "70%", borderRadius: "20px" }}
                                 />
-                                <p style={{ fontSize: "1.5rem", marginTop: "10px" }}>{animalData[highestIndex].info}</p>
+                                <p style={{ fontSize: "1.5rem", marginTop: "10px" }}>{animalData && animalData.type}</p>
+                                <p style={{ fontSize: "1.5rem", marginTop: "10px" }}>
+                                    {animalData && animalData.characteristics}
+                                </p>
+                                <p style={{ fontSize: "1.5rem", marginTop: "10px" }}>
+                                    {animalData && animalData.celebrities}
+                                </p>
                             </div>
                         ) : (
                             <Webcam
                                 ref={webcamRef}
                                 mirrored={true}
-                                height={"90%"}
-                                // style={{ borderRadius: "100%" }}
+                                height="300"
+                                style={{ borderRadius: "4%" }}
                                 muted={false}
                             />
                         )}
@@ -265,30 +261,30 @@ const AnimalTestPage = (props) => {
                         />
                         <PercentageBar
                             title="고양이상"
-                            bgColor="#FCF6BD"
+                            bgColor="#f7efa6"
                             bgBaseColor="#faf7dd"
                             percentage={bar2Percentage}
                         />
                         <PercentageBar
-                            title="여우상"
+                            title={gender === "MALE" ? "곰상" : "여우상"}
                             bgColor="#aef4c9"
                             bgBaseColor="#ddefe4"
                             percentage={bar3Percentage}
                         />
                         <PercentageBar
-                            title="토끼상"
+                            title={gender === "MALE" ? "공룡상" : "토끼상"}
                             bgColor="#A9DEF9"
                             bgBaseColor="#ceeaf8"
                             percentage={bar4Percentage}
                         />
                         <PercentageBar
-                            title="사슴상"
+                            title={gender === "MALE" ? "늑대상" : "사슴상"}
                             bgColor="#E4C1F9"
                             bgBaseColor="#ebd8f7"
                             percentage={bar5Percentage}
                         />
                         <PercentageBar
-                            title="햄스터상"
+                            title={gender === "MALE" ? "토끼상" : "햄스터상"}
                             bgColor="#fca951"
                             bgBaseColor="#ffe0c0"
                             percentage={bar6Percentage}
