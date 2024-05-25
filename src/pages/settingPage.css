@@ -1,28 +1,30 @@
-.container {
+.container { 
     position: relative;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    overflow: hidden;  
-    background-color:whitesmoke;
+    overflow: hidden; /* Prevents any overflow issues */
 }
- 
+
+/* Pseudo-element for fixed background image */
 .container::before {
     content: "";
     position: fixed;
     top: 0;
-    left: 0; 
-    /*background-image: url("../../public/img/mainBackgroundSplit.png");*/
-     
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../../public/img/mainBackgroundSplit.png");
     background-size: cover;
-    background-repeat: no-repeat; 
-    z-index: -1;  
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1; /* Places the background behind the container content */
 }
 
 .noticeboard-wrapper {  
-    left:1320px;
+    left:1476px;
     flex: 1; 
     display: flex;
     justify-content: center;
@@ -39,23 +41,22 @@
     align-items: center;
     position:fixed; 
 }
-.content-wrapper { 
-    background-color: yellow;
+.content-wrapper {  
     display: flex;
     flex-direction: column;
     justify-content: space-between;  
     align-items: center;
-    position:fixed;
-    top:0px;
-    left:480px; 
+    position:fixed; 
+    left:545px; 
     width: 600px;
     height: 1000px; 
     z-index: 2;  
 }
 
 .header, .main  { 
+     
     flex: 1;  
-    max-height: calc(35% - 5px);   
+     
     width: 100%; 
     position: fixed;
     display: flex;
@@ -64,16 +65,18 @@
 }
 
 .main { 
-    margin-top: 710px;
+    margin-top: 790px;
 }
    
-.header {}
+.header {
+    margin-top:50px;
+}
 
 .mainLogo { 
     width: 450px;
 } 
  
-.character-wrap {     
+.character-wrap {      
     width: 300px;
     position: absolute;
     z-index: 4;
@@ -95,11 +98,12 @@
 }
 
 .select-wrap {
-    position: absolute;
+    
+    position: fixed;
     z-index: 6;  
-    width: 200px;
-    top: 40%;
-    left: 50%;
+    width: 100px; 
+    margin-bottom:150px;
+    margin-left:170px;
 }
  
 
@@ -124,7 +128,7 @@
     left: 350px;
     top: 300px;
     z-index: 5;
-    width: 550px;
+    width: 380px;
 }
 
 .select-text {
@@ -132,8 +136,8 @@
     font-family: "Cafe24Ssurround";
     z-index: 5; 
     width: 100px;
-    top: 185px;
-    left: 258px;
+    top: 115px;
+    left: 178px;
     cursor: pointer;
 }
 
@@ -142,7 +146,7 @@
 }
 
 .selected-gender-text.selected {
-    color: blue; /* 선택된 경우의 색상 */
+    color: palevioletred; /* 선택된 경우의 색상 */
 }
 
  
