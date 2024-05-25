@@ -1,0 +1,70 @@
+{
+    "MALE": {
+        "animalTypes": [
+            {
+                "type": "강아지상",
+                "characteristics": "강하고 자신감 넘치는 성격",
+                "celebrities": ["이정재", "공유", "조인성"]
+            },
+            {
+                "type": "고양이상",
+                "characteristics": "날카롭고 도도한 매력",
+                "celebrities": ["김수현", "정해인", "박서준"]
+            },
+            {
+                "type": "공룡상",
+                "characteristics": "친근하고 사랑스러운 성격",
+                "celebrities": ["유아인", "이민호", "차은우"]
+            },
+            {
+                "type": "곰상",
+                "characteristics": "카리스마 있고 남성적인 매력",
+                "celebrities": ["현빈", "송중기", "김우빈"]
+            },
+            {
+                "type": "여우상",
+                "characteristics": "온순하고 따뜻한 성격",
+                "celebrities": ["마동석", "김윤석", "곽도원"]
+            },
+            {
+                "type": "토끼상",
+                "characteristics": "순수하고 귀여운 매력",
+                "celebrities": ["김수현", "박보검", "이준기"]
+            }
+        ]
+    },
+    "FEMALE": {
+        "animalTypes": [
+            {
+                "type": "강아지상",
+                "characteristics": "강하고 카리스마 있는 매력",
+                "celebrities": ["김혜수", "이영애", "김희애"]
+            },
+            {
+                "type": "고양이상",
+                "characteristics": "귀엽고 순수한 매력",
+                "celebrities": ["정은지", "박신혜", "김태리"]
+            },
+            {
+                "type": "여우상",
+                "characteristics": "도도하고 섹시한 매력",
+                "celebrities": ["전지현", "송혜교", "손예진"]
+            },
+            {
+                "type": "토끼상",
+                "characteristics": "사랑스럽고 친근한 성격",
+                "celebrities": ["수지", "아이유", "박보영"]
+            },
+            {
+                "type": "사슴상",
+                "characteristics": "강렬하고 매혹적인 매력",
+                "celebrities": ["한가인", "한예슬", "신민아"]
+            },
+            {
+                "type": "햄스터상",
+                "characteristics": "온순하고 따뜻한 성격",
+                "celebrities": ["라미란", "김혜수", "김선아"]
+            }
+        ]
+    }
+}
