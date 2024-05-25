@@ -10,10 +10,10 @@
                     "친절하고 활발한 성격으로 어디에서도 인기폭발이며 애교와 웃음이 많아 연인에게 특히나 사랑스럽다.",
                     "당신은 애인바라기로 애인의 관심이 부족하면 시무룩해지고 외로움을 타는 모습이 마치 강아지와 똑 닮았다!"
                 ],
-                "celebrities": "강아지상 연예인 : [ 이정재, 공유, 조인성 ]"
+                "celebrities": "강아지상 연예인 : [ 박보검, 진, 임시완, 백현, 정해인, 박형식 ]"
             },
             {
-                "image": "img/resultImg/man_cat.jpg",
+                "image": "img/resultImg/man_cat.jpeg",
                 "typeEnglish": "CAT",
                 "type": "고양이상",
                 "characteristics": [
@@ -21,7 +21,7 @@
                     "자존심이 세계 1등과 맞먹지만 관심 받는 것을 좋아하고 연인에게는 은근히 애교쟁이다.",
                     "시크한 츤데레로 연인에게 끊임없이 설렘을 안겨주는 당신은 고양이와 닮았다!"
                 ],
-                "celebrities": "고양이상 연예인 : [ 김수현, 정해인, 박서준 ]"
+                "celebrities": "고양이상 연예인 : [ 시우민, 강동원, 현진, 황인엽, 황민현, 최현욱 ]"
             },
             {
                 "image": "img/resultImg/man_bear.jpg",
@@ -31,30 +31,30 @@
                     "첫 인상은 무서워 보이지만 알고 보면 귀여운 매력의 당신! 꼼꼼하고 섬세한 성격으로 연인을 헌신적으로 챙겨주는 당신은 연인에게 듬직한 존재!",
                     "포근한 매력에 듬직함까지 갖춘 최고의 남자다!"
                 ],
-                "celebrities": "곰상 연예인 : [ 현빈, 송중기, 김우빈 ]"
+                "celebrities": "곰상 연예인 : [ 조진웅, 여진구, 도경수, 임현식, 강하늘, 박서준 ]"
             },
             {
-                "image": "img/resultImg/man_dinosaur.jpg",
+                "image": "img/resultImg/man_dinosaur.jpeg",
                 "typeEnglish": "DINOSAUR",
                 "type": "공룡상",
                 "characteristics": [
                     "무심한 성격에 첫인상은 나쁜 남자 같지만, 알고 보면 따뜻함이 묻어나는 당신!",
                     "시크한 매력에 선뜻 다가가지 못하지만 한번 다가가면 헤어나올 수 없는 터프한 매력을 가진 카리스마 있는 남자다."
                 ],
-                "celebrities": "공룡상 연예인 : [ 유아인, 이민호, 차은우 ]"
+                "celebrities": "공룡상 연예인 : [ 김우빈, 공유, 윤두준, 안효섭, 송강, 류준열 ]"
             },
             {
-                "image": "img/resultImg/man_fox.jpg",
+                "image": "img/resultImg/man_wolf.jpeg",
                 "typeEnglish": "WOLF",
                 "type": "늑대상",
                 "characteristics": [
                     "사납고 남성미가 풍기며 투박한 느낌을 주지만, 알고보면 누구보다 따뜻하고 주위 사람들을 보듬을 줄 아는 사람!",
                     "누구 하나 무시하지 못할정도로 강하고 카리스마를 갖고 있는 남자다."
                 ],
-                "celebrities": "늑대상 연예인 : [ 마동석, 김윤석, 곽도원 ]"
+                "celebrities": "늑대상 연예인 : [ 유승호, 손석구, 이민기, 황인엽, 육성재 ]"
             },
             {
-                "image": "img/resultImg/man_rabbit.jpg",
+                "image": "img/resultImg/man_rabbit.jpeg",
                 "typeEnglish": "RABBIT",
                 "type": "토끼상",
                 "characteristics": [
@@ -62,14 +62,14 @@
                     "호기심이 많아 활발하며 귀엽고 순수한 외모로 연인의 보호본능을 자극한다.",
                     "존재 자체가 상큼한 당신은 특별한 애교 없이도 연인에게 너무나도 사랑스럽다!"
                 ],
-                "celebrities": "토끼상 연예인 : [ 김수현, 박보검, 이준기 ]"
+                "celebrities": "토끼상 연예인 : [ 정국, 박지훈, 안형섭, 도영, 수빈, 이민혁 ]"
             }
         ]
     },
     "female": {
         "animalTypes": [
             {
-                "image": "img/resultImg/girl_dog.jpg",
+                "image": "img/resultImg/girl_dog.jpeg",
                 "typeEnglish": "DOG",
                 "type": "강아지상",
                 "characteristics": [
@@ -77,10 +77,10 @@
                     "상냥하고 활발한 성격으로 어디에서도 인기폭발이지만, 애교와 웃음이 많아 연인에게 특히나 사랑스럽다.",
                     "당신은 애인바라기로 애인의 관심이 부족하면 시무룩해지고 외로움을 타는 모습이 마치 강아지와 똑 닮았다!"
                 ],
-                "celebrities": "강아지상 연예인 : [ 김혜수, 이영애, 김희애 ]"
+                "celebrities": "강아지상 연예인 : [ 안유진, 지수, 우기, 윈터, 박보영, 츄, 아이유]"
             },
             {
-                "image": "img/resultImg/girl_cat.jpg",
+                "image": "img/resultImg/girl_cat.jpeg",
                 "typeEnglish": "CAT",
                 "type": "고양이상",
                 "characteristics": [
@@ -88,7 +88,7 @@
                     "자존심이 세계 1등과 맞먹지만 관심 받는 것을 좋아하고 애인에게는 은근히 애교쟁이다.",
                     "시크한 츤데레로 연인에게 끊임없이 설렘을 안겨주는 당신은 고양이와 닮았다!"
                 ],
-                "celebrities": "고양이상 연예인 : [ 정은지, 박신혜, 김태리 ]"
+                "celebrities": "고양이상 연예인 : [ 해린, 제니, 예지, 류진, 한예슬, 권나라, 리즈 ]"
             },
             {
                 "image": "img/resultImg/girl_fox.jpg",
@@ -99,10 +99,10 @@
                     "우아한 외모에 더해 뛰어난 센스의 성격을 가진 당신은 어딜가도 주목받는 주인공이다!",
                     "사교적인 성격을 가져 연인에게도 적극적으로 애정표현을 하지만 밀당의 고수인 당신은 연인의 혼을 쏙 빼놓는 매력쟁이다."
                 ],
-                "celebrities": "여우상 연예인 : [ 전지현, 송혜교, 손예진 ]"
+                "celebrities": "여우상 연예인 : [ 김민주, 조이, 쯔위, 김태희, 서지수, 이나경 ]"
             },
             {
-                "image": "img/resultImg/girl_rabbit.jpg",
+                "image": "img/resultImg/girl_rabbit.jpeg",
                 "typeEnglish": "RABBIT",
                 "type": "토끼상",
                 "characteristics": [
@@ -110,7 +110,7 @@
                     "호기심이 많아 활발하며 귀엽고 순수한 외모로 연인의 보호본능을 자극한다.",
                     "존재 자체가 상큼하고 깜찍한 당신은 특별한 애교 없이도 연인에게 너무나도 사랑스럽다!"
                 ],
-                "celebrities": "토끼상 연예인 : [ 장원영, 수지, 아이유, 박보영 ]"
+                "celebrities": "토끼상 연예인 : [ 장원영, 나연, 혜원, 민지, 수지, 아이린 ]"
             },
             {
                 "image": "img/resultImg/girl_deer.jpg",
@@ -121,10 +121,10 @@
                     "초롱초롱한 눈망울이 당신의 가장 큰 트레이드 마크며 따스하고 온순한 눈빛을 가져 사랑스러움을 항상 머금고 있다!",
                     "부끄러움이 많아 애정표현이 낯설은 당신은 연인에게조차 신비한 존재지만 따뜻한 성격으로 연인의 마음을 사로잡는 능력을 가졌다."
                 ],
-                "celebrities": "사슴상 연예인 : [ 한가인, 한예슬, 신민아 ]"
+                "celebrities": "사슴상 연예인 : [ 아린, 김채원, 윤아, 서현, 미연, 설아, 비니 ]"
             },
             {
-                "image": "img/resultImg/girl_hamster.jpg",
+                "image": "img/resultImg/girl_hamster.jpeg",
                 "typeEnglish": "HAMSTER",
                 "type": "햄스터상",
                 "characteristics": [
@@ -133,7 +133,7 @@
                     "아무 생각 없어 보이지만 항상 귀여운 고민을 하고 있다.",
                     "가만히 있어도 챙겨주고 싶은 마음을 불러일으키는 매력쟁이!"
                 ],
-                "celebrities": "햄스터상 연예인 : [ 이솜, 김다미, 안소희 ]"
+                "celebrities": "햄스터상 연예인 : [ 조유리, 송하영, 시은, 문별, 사나, 김다미 ]"
             }
         ]
     }
