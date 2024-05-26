@@ -354,6 +354,7 @@ const AnimalTestPage = () => {
                                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
                                     border: "1px solid rgba(0, 0, 0, 0.1)",
                                 }}
+                                
                             >
                                 <Webcam
                                     ref={webcamRef}
