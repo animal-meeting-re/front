@@ -13,7 +13,7 @@ const RotatingImage = (props) => {
     }, []);
 
     return (
-        <div className="scene" style={{ width: props.width, height: props.height }}>
+        <div className="scene" style={{ paddingTop: props.paddingTop, width: props.width, height: props.height }}>
             <div className={`card ${isFlipped ? "is-flipped" : ""}`}>
                 <div className="card__face card__face--front">
                     <img src={props.front} alt="Front" />

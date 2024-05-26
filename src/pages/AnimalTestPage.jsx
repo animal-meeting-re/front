@@ -171,12 +171,17 @@ const AnimalTestPage = () => {
         <div className="main_container">
             <div className="screen_container">
                 <div className="center_container">
-                    {/* <div className="header_container_v1">
-                        <img style={{ width: "260px" }} src={`${process.env.PUBLIC_URL}/img/mainLogo.png`} />
-                    </div> */}
+                    <div className="header_container_v1">
+                        <img style={{ 
+                            width: "450px", 
+                            marginTop : "45px"
+                        }} 
+                        src={`${process.env.PUBLIC_URL}/img/mainLogoNew.png`} />
+                    </div>
                     <div className="header_container_v2">
                         <GradientButton
                             content="Ai Animal Test"
+                            buttonStyle={{display: "none"}}
                             textStyle={{
                                 fontSize: "2.6rem",
                                 fontWeight: "800",
@@ -206,6 +211,7 @@ const AnimalTestPage = () => {
                                     buttonStyle={{
                                         fontSize: "1rem",
                                         fontWeight: "800",
+                                        // display: "none"
                                     }}
                                 />
                             </div>
@@ -245,7 +251,8 @@ const AnimalTestPage = () => {
                                     height: "100%",
                                     textAlign: "center",
                                     backgroundColor: "white",
-                                    padding: "20px",
+                                    paddingTop: "80px",
+                                    paddingBottom : "20px",
                                     borderRadius: "10px",
                                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
                                     border: "1px solid rgba(0, 0, 0, 0.1)",
@@ -253,12 +260,13 @@ const AnimalTestPage = () => {
                                     flexDirection: "column",
                                     alignItems: "center",
                                     justifyContent: "center",
+                                    
                                 }}
                             >
                                 {showRotatingImage ? (
                                     <RotatingImage
-                                        height="24vh"
-                                        width="24vh"
+                                        height="28vh"
+                                        width="28vh"
                                         front={process.env.PUBLIC_URL + animalData.image}
                                         back={process.env.PUBLIC_URL + animalData.subImage}
                                     />
@@ -291,7 +299,16 @@ const AnimalTestPage = () => {
                                     </span>
                                 )}
 
-                                <p style={{ fontSize: "1.8rem", marginTop: "15px", fontWeight: "bold", color: "#333" }}>
+                                <p style={{ 
+                                 fontSize: "3rem", 
+                                 marginTop: "100px", 
+                                 fontWeight: "bold",
+                                 color: "#333",
+                                 textDecoration: "underline",
+                                 textDecorationColor: "#0ea5e9",
+                                 textDecorationStyle: "wavy",
+                                 fontFamily: "Cafe24Ssurround"                         
+                                 }}>
                                     {animalData && animalData.type}
                                 </p>
                                 <p
@@ -305,7 +322,9 @@ const AnimalTestPage = () => {
                                 >
                                     {animalData &&
                                         animalData.characteristics.map((characteristic, index) => (
-                                            <p key={index} style={{ margin: "0" }}>
+                                            <p key={index} style={{
+                                                 margin: "0", 
+                                                 }}>
                                                 {characteristic}
                                             </p>
                                         ))}
@@ -329,7 +348,8 @@ const AnimalTestPage = () => {
                                     height: "100%",
                                     textAlign: "center",
                                     backgroundColor: "white",
-                                    padding: "20px",
+                                    // padding: "10px",
+                                    paddingTop : "20px",
                                     borderRadius: "10px",
                                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
                                     border: "1px solid rgba(0, 0, 0, 0.1)",
