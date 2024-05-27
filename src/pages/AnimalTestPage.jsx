@@ -119,9 +119,17 @@ const AnimalTestPage = () => {
     }
 
     async function loadFiles() {
-        setModelFile(await fetchFile(modelURL, "model.json"));
-        setWeightsFile(await fetchFile(weightsURL, "weights.bin"));
-        setMetadataFile(await fetchFile(metadataURL, "metadata.json"));
+        try {
+            const modelFile = await fetchFile(modelURL, "model.json");
+            const weightsFile = await fetchFile(weightsURL, "weights.bin");
+            const metadataFile = await fetchFile(metadataURL, "metadata.json");
+
+            setModelFile(modelFile);
+            setWeightsFile(weightsFile);
+            setMetadataFile(metadataFile);
+        } catch (error) {
+            console.error("파일 로드 에러:", error);
+        }
     }
 
     // async function loadModel() {
@@ -142,17 +150,21 @@ const AnimalTestPage = () => {
 
     async function predict() {
         if (model) {
-            let prediction = await model.predict(webcamRef.current.video);
-            console.log(prediction);
+            try {
+                const prediction = await model.predict(webcamRef.current.video);
+                console.log(prediction);
 
-            const newCumulativePredictions = cumulativePredictions.map(
-                (value, index) => value + prediction[index].probability + Math.random() * 0.2
-            );
+                const newCumulativePredictions = cumulativePredictions.map(
+                    (value, index) => value + prediction[index].probability.toFixed(2)*100 //+ (Math.random() - 0.4) * 0.05
+                );
 
-            setCumulativePredictions(newCumulativePredictions);
-            console.log("result update");
+                setCumulativePredictions(newCumulativePredictions);
+                console.log("예측 업데이트:", newCumulativePredictions);
+            } catch (error) {
+                console.error("예측 중 에러:", error);
+            }
         } else {
-            console.log("model undefined");
+            console.log("모델이 정의되지 않았습니다.");
         }
     }
 
@@ -175,6 +187,8 @@ const AnimalTestPage = () => {
                     }, 1000);
                 }
             }, 1000);
+        }).catch(error => {
+            console.error("예측 시작 중 에러:", error);
         });
     }
 
