@@ -272,7 +272,7 @@ const AnimalTestPage = () => {
                                     />
                                 ) : (
                                     <span>
-                                        <img
+                                        {/* <img
                                             src={process.env.PUBLIC_URL + animalData.image}
                                             alt={animalData.type}
                                             style={{
@@ -283,13 +283,13 @@ const AnimalTestPage = () => {
                                                 border: "5px solid gainsboro",
                                                 marginRight: "10px",
                                             }}
-                                        />
+                                        /> */}
                                         <img
                                             src={process.env.PUBLIC_URL + animalData.subImage}
                                             alt={animalData.type}
                                             style={{
-                                                width: "24vh",
-                                                height: "24vh",
+                                                width: "30vh",
+                                                height: "30vh",
                                                 objectFit: "cover",
                                                 borderRadius: "20px",
                                                 border: "5px solid gainsboro",
@@ -354,6 +354,7 @@ const AnimalTestPage = () => {
                                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
                                     border: "1px solid rgba(0, 0, 0, 0.1)",
                                 }}
+                                
                             >
                                 <Webcam
                                     ref={webcamRef}
