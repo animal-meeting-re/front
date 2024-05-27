@@ -52,18 +52,18 @@ const AnimalTestPage = () => {
             loadFiles();
         }
 
-        const handleKeyDown = (event) => {
-            if (event.key === 'q' || event.key === 'Q') {
-                setGender(null);
-                navigate("/");
-            }
-        };
+        // const handleKeyDown = (event) => {
+        //     if (event.key === 'q' || event.key === 'Q') {
+        //         setGender(null);
+        //         navigate("/");
+        //     }
+        // };
 
-        window.addEventListener('keydown', handleKeyDown);
+        // window.addEventListener('keydown', handleKeyDown);
 
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
+        // return () => {
+        //     window.removeEventListener('keydown', handleKeyDown);
+        // };
 
     }, []);
 
