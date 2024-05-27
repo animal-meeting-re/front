@@ -65,7 +65,8 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    margin-top: 40px;
 }
 
 .webcam_container {

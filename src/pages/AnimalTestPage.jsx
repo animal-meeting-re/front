@@ -348,8 +348,8 @@ const AnimalTestPage = () => {
                                     height: "100%",
                                     textAlign: "center",
                                     backgroundColor: "white",
-                                    // padding: "10px",
-                                    paddingTop : "20px",
+                                    paddingBottom: "30px",
+                                    paddingTop : "30px",
                                     borderRadius: "10px",
                                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
                                     border: "1px solid rgba(0, 0, 0, 0.1)",
@@ -359,8 +359,8 @@ const AnimalTestPage = () => {
                                 <Webcam
                                     ref={webcamRef}
                                     mirrored={true}
-                                    width={"90%"}
-                                    height={"90%"}
+                                    width={"95%"}
+                                    height={"95%"}
                                     style={{ borderRadius: "10px" }}
                                     muted={false}
                                 />
