@@ -78,10 +78,12 @@ const SettingPage = () => {
             modelURL = process.env.PUBLIC_URL + "/models/girl/model.json";
             metadataURL = process.env.PUBLIC_URL + "/models/girl/metadata.json";
             weightsURL = process.env.PUBLIC_URL + "/models/girl/weights.bin";
+            console.log("여자여자")
         } else if (gender === "MALE") {
             modelURL = process.env.PUBLIC_URL + "/models/boy/model.json";
             metadataURL = process.env.PUBLIC_URL + "/models/boy/metadata.json";
             weightsURL = process.env.PUBLIC_URL + "/models/boy/weights.bin";
+            console.log("남자남자")
         }
         setModelURL(modelURL);
         setMetadataURL(metadataURL);
