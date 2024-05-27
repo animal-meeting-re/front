@@ -44,12 +44,29 @@ const AnimalTestPage = () => {
     const [showRotatingImage, setShowRotatingImage] = useState(true);
 
     useEffect(() => {
+
+        
         if (gender == null) {
             navigate("/");
         } else {
             loadFiles();
         }
+
+        const handleKeyDown = (event) => {
+            if (event.key === 'q' || event.key === 'Q') {
+                setGender(null);
+                navigate("/");
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+
     }, []);
+
 
     useEffect(() => {
         if (modelFile && weightsFile && metadataFile) {
@@ -107,10 +124,21 @@ const AnimalTestPage = () => {
         setMetadataFile(await fetchFile(metadataURL, "metadata.json"));
     }
 
+    // async function loadModel() {
+    //     console.log("init model");
+    //     await setModel(await tmImage.loadFromFiles(modelFile, weightsFile, metadataFile));
+    // }
+
     async function loadModel() {
         console.log("init model");
-        setModel(await tmImage.loadFromFiles(modelFile, weightsFile, metadataFile));
+    
+        await Promise.all([modelFile, weightsFile, metadataFile]);
+
+        // 파일이 모두 로드된 후에 모델을 초기화
+        const loadedModel = await tmImage.loadFromFiles(modelFile, weightsFile, metadataFile);
+        setModel(loadedModel);
     }
+    
 
     async function predict() {
         if (model) {
