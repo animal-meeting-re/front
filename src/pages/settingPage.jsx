@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { GENDER, MODEL_URL, METADATA_URL, WEIGHTS_URL } from "../recoil/Atoms";
@@ -42,7 +42,6 @@ const TypingText = ({ text, onFinish }) => {
 };
 
 const SettingPage = () => {
-
     const navigate = useNavigate();
     const [selectedGender, setSelectedGender] = useRecoilState(GENDER);
     const setModelURL = useSetRecoilState(MODEL_URL);
@@ -50,49 +49,24 @@ const SettingPage = () => {
     const setWeightsURL = useSetRecoilState(WEIGHTS_URL);
     const [isPreviousTypingFinished, setPreviousTypingFinished] = useState(false);
 
-    const focusRef = useRef(null);
-    const femaleButtonRef = useRef(null);
-    const maleButtonRef = useRef(null);
-
     useEffect(() => {
         setSelectedGender(null);
 
-        // 키보드 입력
-        const handleKeyDown = (event) => {
+         // 키보드 입력
+         const handleKeyDown = (event) => {
             if (event.key === 'q' || event.key === 'Q') {
-                // 버튼 클릭 트리거
-                if (femaleButtonRef.current) {
-                    femaleButtonRef.current.click();
-                }
-                //setSelectedGender("FEMALE");
-                //handleGenderSelect("FEMALE");
+                setSelectedGender("FEMALE");
+                handleGenderSelect("FEMALE");
             } else if (event.key === 'w' || event.key === 'W') {
-                if (femaleButtonRef.current) {
-                    femaleButtonRef.current.click();
-                }
-                // setSelectedGender("MALE");
-                // handleGenderSelect("MALE");
+                setSelectedGender("MALE");
+                handleGenderSelect("MALE");
             }
         };
 
-        const handleWindowFocus = () => {
-            if (focusRef.current) {
-                focusRef.current.focus();
-            }
-        };
-
-        window.addEventListener("focus", handleWindowFocus);
         window.addEventListener('keydown', handleKeyDown);
-
-         // 컴포넌트가 마운트될 때 포커스를 설정합니다.
-         if (focusRef.current) {
-            focusRef.current.focus();
-        }
-
 
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
-            window.removeEventListener("focus", handleWindowFocus);
         };
 
     }, []);
@@ -103,12 +77,10 @@ const SettingPage = () => {
             modelURL = process.env.PUBLIC_URL + "/models/girl/model.json";
             metadataURL = process.env.PUBLIC_URL + "/models/girl/metadata.json";
             weightsURL = process.env.PUBLIC_URL + "/models/girl/weights.bin";
-            console.log("여자여자")
         } else if (gender === "MALE") {
             modelURL = process.env.PUBLIC_URL + "/models/boy/model.json";
             metadataURL = process.env.PUBLIC_URL + "/models/boy/metadata.json";
             weightsURL = process.env.PUBLIC_URL + "/models/boy/weights.bin";
-            console.log("남자남자")
         }
         setModelURL(modelURL);
         setMetadataURL(metadataURL);
@@ -116,7 +88,7 @@ const SettingPage = () => {
         navigate("/test");
     };
 
-
+    
     const isColumn = useMediaQuery({
         query: "(max-aspect-ratio: 1/1)",
     });
@@ -131,8 +103,8 @@ const SettingPage = () => {
 
     return (
         <div className="container">
-            {/* <div className="participant-wrapper">
-                {isRow && (
+            <div className="participant-wrapper">
+                {/* {isRow && (
                     <Statistic
                         count="8"
                         most_woman_animal="토끼상"
@@ -140,11 +112,11 @@ const SettingPage = () => {
                         most_woman_path="rabbit-woman"
                         most_man_path="wolf"
                     />
-                )}
-            </div> */}
+                )} */}
+            </div>
             <div className="content-wrapper">
                 <div className="header">
-                    <img className="mainLogo" src={`${process.env.PUBLIC_URL}/img/mainLogo.png`} />
+                    <img className="mainLogo" src={`${process.env.PUBLIC_URL}/img/mainLogoNew.png`} />
                 </div>
 
                 <div className="main">
@@ -158,10 +130,10 @@ const SettingPage = () => {
                         <div className="speech-text">
                             <p>
                                 {isPreviousTypingFinished ? (
-                                    "오늘 동물상 미팅을 하러 온 주민이구나!"
+                                    "오늘 동물상 측정을 하러 온 주민이구나!"
                                 ) : (
                                     <TypingText
-                                        text="오늘 동물상 미팅을 하러 온 주민이구나!"
+                                        text="오늘 동물상 측정을 하러 온 주민이구나!"
                                         onFinish={handlePreviousTypingFinish}
                                     />
                                 )}
@@ -178,7 +150,6 @@ const SettingPage = () => {
                         <img className="selectBubble" src={`${process.env.PUBLIC_URL}/img/selectBubble.png`} />
                         <div className="select-text">
                             <p
-                                ref={femaleButtonRef}
                                 onClick={() => handleGenderSelect("FEMALE")}
                                 onMouseEnter={() => setSelectedGender("FEMALE")}
                                 onMouseLeave={() => setSelectedGender(null)}
@@ -191,7 +162,6 @@ const SettingPage = () => {
                                 여자
                             </p>
                             <p
-                                ref={maleButtonRef}
                                 onClick={() => handleGenderSelect("MALE")}
                                 onMouseEnter={() => setSelectedGender("MALE")}
                                 onMouseLeave={() => setSelectedGender(null)}
@@ -207,11 +177,11 @@ const SettingPage = () => {
                     </div>
                 </div>
             </div>
-            {isRow && (
+            {/* {isRow && (
                 <div className="noticeboard-wrapper">
                     <NoticeBoard />
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
