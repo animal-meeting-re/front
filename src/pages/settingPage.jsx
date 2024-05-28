@@ -50,6 +50,7 @@ const SettingPage = () => {
     const setWeightsURL = useSetRecoilState(WEIGHTS_URL);
     const [isPreviousTypingFinished, setPreviousTypingFinished] = useState(false);
 
+    const focusRef = useRef(null);
     useEffect(() => {
         setSelectedGender(null);
 
@@ -64,10 +65,24 @@ const SettingPage = () => {
             }
         };
 
+        const handleWindowFocus = () => {
+            if (focusRef.current) {
+                focusRef.current.focus();
+            }
+        };
+
+        window.addEventListener("focus", handleWindowFocus);
         window.addEventListener('keydown', handleKeyDown);
+
+         // 컴포넌트가 마운트될 때 포커스를 설정합니다.
+         if (focusRef.current) {
+            focusRef.current.focus();
+        }
+
 
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener("focus", handleWindowFocus);
         };
 
     }, []);
@@ -106,7 +121,7 @@ const SettingPage = () => {
 
     return (
         <div className="container">
-            <div className="participant-wrapper">
+            {/* <div className="participant-wrapper">
                 {isRow && (
                     <Statistic
                         count="8"
@@ -116,7 +131,7 @@ const SettingPage = () => {
                         most_man_path="wolf"
                     />
                 )}
-            </div>
+            </div> */}
             <div className="content-wrapper">
                 <div className="header">
                     <img className="mainLogo" src={`${process.env.PUBLIC_URL}/img/mainLogo.png`} />

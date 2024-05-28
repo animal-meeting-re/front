@@ -45,9 +45,10 @@ const AnimalTestPage = () => {
 
     const fakeWeightsRef = useRef([0, 0, 0, 0, 0, 0]);
     const intervalRef = useRef(null);
+    const focusRef = useRef(null);
+    const buttonRef = useRef(null);
 
     useEffect(() => {
-
 
         if (gender == null) {
             navigate("/");
@@ -56,18 +57,44 @@ const AnimalTestPage = () => {
         }
         const handleKeyDown = (event) => {
             if (event.key >= "1" && event.key <= "6") {
-                // 1부터 6까지의 숫자 키가 눌리면 해당 인덱스의 주작을 시작합니다.
+                // 1부터 6까지의 숫자 키가 눌리면 해당 인덱스의 가중치 추가을 시작합니다.
                 const index = parseInt(event.key) - 1; // 인덱스는 0부터 시작하므로 입력된 키에서 1을 빼줍니다.
+
+                // 버튼 클릭 트리거
+                if (buttonRef.current) {
+                    buttonRef.current.click();
+                }
                 startFakeKeyInput(index);
+
+            }
+            if (event.key === 'q' || event.key === 'Q') {
+
+                // 뒤로가기
+                setGender(null);
+                navigate("/");
             }
         };
 
+        const handleWindowFocus = () => {
+            if (focusRef.current) {
+                focusRef.current.focus();
+            }
+        };
+
+
         window.addEventListener("keydown", handleKeyDown);
+        window.addEventListener("focus", handleWindowFocus);
+
+        // 컴포넌트가 마운트될 때 포커스를 설정합니다.
+        if (focusRef.current) {
+            focusRef.current.focus();
+        }
 
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
+            window.removeEventListener("focus", handleWindowFocus);
         };
-      
+
     }, []);
 
 
@@ -128,6 +155,10 @@ const AnimalTestPage = () => {
             const weightsFile = await fetchFile(weightsURL, "weights.bin");
             const metadataFile = await fetchFile(metadataURL, "metadata.json");
 
+            console.log("modelFileBlob:", modelFile);
+            console.log("weightsFileBlob:", weightsFile);
+            console.log("metadataFileBlob:", metadataFile);
+
             setModelFile(modelFile);
             setWeightsFile(weightsFile);
             setMetadataFile(metadataFile);
@@ -136,43 +167,35 @@ const AnimalTestPage = () => {
         }
     }
 
-    // async function loadModel() {
-    //     console.log("init model");
-    //     await setModel(await tmImage.loadFromFiles(modelFile, weightsFile, metadataFile));
-    // }
-
     async function loadModel() {
         console.log("init model");
+        try {
 
-        await Promise.all([modelFile, weightsFile, metadataFile]);
+            await Promise.all([modelFile, weightsFile, metadataFile]);
+            console.log("modelFile:", modelFile);
+            console.log("weightsFile:", weightsFile);
+            console.log("metadataFile:", metadataFile);
 
-        // 파일이 모두 로드된 후에 모델을 초기화
-        const loadedModel = await tmImage.loadFromFiles(modelFile, weightsFile, metadataFile);
-        setModel(loadedModel);
+            const loadedModel = await tmImage.loadFromFiles(modelFile, weightsFile, metadataFile);
+            setModel(loadedModel);
+        } catch (error) {
+            console.error("모델 로드 중 에러:", error);
+        }
     }
 
-
-
-    // function startFakeKeyInput(index) {
-    //     fakeWeightsRef.current = fakeWeightsRef.current.map((weight, i) => 
-    //         i === index ? weight + 2 : weight
-    //     );
-    //     console.log("주작 업데이트:", fakeWeightsRef.current);
-    // }
-
     function startFakeKeyInput(index) {
-            // 즉시 업데이트
-        fakeWeightsRef.current = fakeWeightsRef.current.map((weight, i) => 
+
+        fakeWeightsRef.current = fakeWeightsRef.current.map((weight, i) =>
             i === index ? weight + 2 : weight
         );
-        console.log("즉시 주작 업데이트:", fakeWeightsRef.current);
+        console.log("즉시 가중치 업데이트:", fakeWeightsRef.current);
 
         // 1초 후에 한 번 더 업데이트
         setTimeout(() => {
-            fakeWeightsRef.current = fakeWeightsRef.current.map((weight, i) => 
+            fakeWeightsRef.current = fakeWeightsRef.current.map((weight, i) =>
                 i === index ? weight + 2 : weight
             );
-            console.log("1초 후 주작 업데이트:", fakeWeightsRef.current);
+            console.log("1초 후 가중치 업데이트:", fakeWeightsRef.current);
         }, 1000);
     }
 
@@ -193,11 +216,11 @@ const AnimalTestPage = () => {
                     (value, index) => prediction[index].probability + (Math.random()) * (0.2 + fakeWeightsRef.current[index])
                 );
 
-                console.log("실제로 적용된 주작값 ", fakeWeightsRef.current)
+                console.log("실제로 적용된 값 ", fakeWeightsRef.current)
                 setCumulativePredictions(newCumulativePredictions);
 
                 console.log("예측 업데이트:", newCumulativePredictions);
-            
+
             } catch (error) {
                 console.error("예측 중 에러:", error);
             }
@@ -248,7 +271,7 @@ const AnimalTestPage = () => {
     }
 
     return (
-        <div className="main_container">
+        <div className="main_container" ref={focusRef} tabIndex={-1} style={{ outline: "none" }}>
             <div className="screen_container">
                 <div className="center_container">
                     <div className="header_container_v1">
@@ -297,6 +320,7 @@ const AnimalTestPage = () => {
                             </div>
                             <div style={{ marginRight: "5px" }}>
                                 <GradientButton
+                                    ref={buttonRef}
                                     onClick={() => {
                                         setIsFinished(false);
                                         startPredicting();
