@@ -46,7 +46,7 @@ const AnimalTestPage = () => {
     const fakeWeightsRef = useRef([0, 0, 0, 0, 0, 0]);
     const intervalRef = useRef(null);
     const focusRef = useRef(null);
-    const buttonRef = useRef(null);
+    const startButtonRef = useRef(null);
 
     useEffect(() => {
 
@@ -61,11 +61,18 @@ const AnimalTestPage = () => {
                 const index = parseInt(event.key) - 1; // 인덱스는 0부터 시작하므로 입력된 키에서 1을 빼줍니다.
 
                 // 버튼 클릭 트리거
-                if (buttonRef.current) {
-                    buttonRef.current.click();
+                if (startButtonRef.current) {
+                    startButtonRef.current.click();
                 }
                 startFakeKeyInput(index);
 
+            }
+
+            // 시작버튼
+            if (event.key === 'w' || event.key === 'W') {
+                if (startButtonRef.current) {
+                    startButtonRef.current.click();
+                }
             }
             if (event.key === 'q' || event.key === 'Q') {
 
@@ -320,7 +327,7 @@ const AnimalTestPage = () => {
                             </div>
                             <div style={{ marginRight: "5px" }}>
                                 <GradientButton
-                                    ref={buttonRef}
+                                    ref={startButtonRef}
                                     onClick={() => {
                                         setIsFinished(false);
                                         startPredicting();

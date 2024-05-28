@@ -51,17 +51,27 @@ const SettingPage = () => {
     const [isPreviousTypingFinished, setPreviousTypingFinished] = useState(false);
 
     const focusRef = useRef(null);
+    const femaleButtonRef = useRef(null);
+    const maleButtonRef = useRef(null);
+
     useEffect(() => {
         setSelectedGender(null);
 
         // 키보드 입력
         const handleKeyDown = (event) => {
             if (event.key === 'q' || event.key === 'Q') {
-                setSelectedGender("FEMALE");
-                handleGenderSelect("FEMALE");
+                // 버튼 클릭 트리거
+                if (femaleButtonRef.current) {
+                    femaleButtonRef.current.click();
+                }
+                //setSelectedGender("FEMALE");
+                //handleGenderSelect("FEMALE");
             } else if (event.key === 'w' || event.key === 'W') {
-                setSelectedGender("MALE");
-                handleGenderSelect("MALE");
+                if (femaleButtonRef.current) {
+                    femaleButtonRef.current.click();
+                }
+                // setSelectedGender("MALE");
+                // handleGenderSelect("MALE");
             }
         };
 
@@ -168,6 +178,7 @@ const SettingPage = () => {
                         <img className="selectBubble" src={`${process.env.PUBLIC_URL}/img/selectBubble.png`} />
                         <div className="select-text">
                             <p
+                                ref={femaleButtonRef}
                                 onClick={() => handleGenderSelect("FEMALE")}
                                 onMouseEnter={() => setSelectedGender("FEMALE")}
                                 onMouseLeave={() => setSelectedGender(null)}
@@ -180,6 +191,7 @@ const SettingPage = () => {
                                 여자
                             </p>
                             <p
+                                ref={maleButtonRef}
                                 onClick={() => handleGenderSelect("MALE")}
                                 onMouseEnter={() => setSelectedGender("MALE")}
                                 onMouseLeave={() => setSelectedGender(null)}
