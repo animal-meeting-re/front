@@ -43,28 +43,31 @@ const AnimalTestPage = () => {
 
     const [showRotatingImage, setShowRotatingImage] = useState(true);
 
+    const fakeWeightsRef = useRef([0, 0, 0, 0, 0, 0]);
+    const intervalRef = useRef(null);
+
     useEffect(() => {
 
-        
+
         if (gender == null) {
             navigate("/");
         } else {
             loadFiles();
         }
+        const handleKeyDown = (event) => {
+            if (event.key >= "1" && event.key <= "6") {
+                // 1부터 6까지의 숫자 키가 눌리면 해당 인덱스의 주작을 시작합니다.
+                const index = parseInt(event.key) - 1; // 인덱스는 0부터 시작하므로 입력된 키에서 1을 빼줍니다.
+                startFakeKeyInput(index);
+            }
+        };
 
-        // const handleKeyDown = (event) => {
-        //     if (event.key === 'q' || event.key === 'Q') {
-        //         setGender(null);
-        //         navigate("/");
-        //     }
-        // };
+        window.addEventListener("keydown", handleKeyDown);
 
-        // window.addEventListener('keydown', handleKeyDown);
-
-        // return () => {
-        //     window.removeEventListener('keydown', handleKeyDown);
-        // };
-
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+      
     }, []);
 
 
@@ -91,6 +94,7 @@ const AnimalTestPage = () => {
         setBar5Percentage(0);
         setBar6Percentage(0);
         setResultIndex(0);
+        fakeWeightsRef.current = [0, 0, 0, 0, 0, 0];
     }
 
     function updateCumulativePredictions() {
@@ -139,14 +143,40 @@ const AnimalTestPage = () => {
 
     async function loadModel() {
         console.log("init model");
-    
+
         await Promise.all([modelFile, weightsFile, metadataFile]);
 
         // 파일이 모두 로드된 후에 모델을 초기화
         const loadedModel = await tmImage.loadFromFiles(modelFile, weightsFile, metadataFile);
         setModel(loadedModel);
     }
-    
+
+
+
+    // function startFakeKeyInput(index) {
+    //     fakeWeightsRef.current = fakeWeightsRef.current.map((weight, i) => 
+    //         i === index ? weight + 2 : weight
+    //     );
+    //     console.log("주작 업데이트:", fakeWeightsRef.current);
+    // }
+
+    function startFakeKeyInput(index) {
+            // 즉시 업데이트
+        fakeWeightsRef.current = fakeWeightsRef.current.map((weight, i) => 
+            i === index ? weight + 2 : weight
+        );
+        console.log("즉시 주작 업데이트:", fakeWeightsRef.current);
+
+        // 1초 후에 한 번 더 업데이트
+        setTimeout(() => {
+            fakeWeightsRef.current = fakeWeightsRef.current.map((weight, i) => 
+                i === index ? weight + 2 : weight
+            );
+            console.log("1초 후 주작 업데이트:", fakeWeightsRef.current);
+        }, 1000);
+    }
+
+
 
     async function predict() {
         if (model) {
@@ -154,12 +184,20 @@ const AnimalTestPage = () => {
                 const prediction = await model.predict(webcamRef.current.video);
                 console.log(prediction);
 
+                // const newCumulativePredictions = cumulativePredictions.map(
+                //     (value, index) => value + prediction[index].probability + (Math.random()) * (0.1 + fakeWeightsRef.current[index])//.toFixed(2)*100 //+ (Math.random() - 0.4) * 0.05
+                // );
+
+                //누적값 빼기
                 const newCumulativePredictions = cumulativePredictions.map(
-                    (value, index) => value + prediction[index].probability.toFixed(2)*100 //+ (Math.random() - 0.4) * 0.05
+                    (value, index) => prediction[index].probability + (Math.random()) * (0.2 + fakeWeightsRef.current[index])
                 );
 
+                console.log("실제로 적용된 주작값 ", fakeWeightsRef.current)
                 setCumulativePredictions(newCumulativePredictions);
+
                 console.log("예측 업데이트:", newCumulativePredictions);
+            
             } catch (error) {
                 console.error("예측 중 에러:", error);
             }
@@ -214,16 +252,16 @@ const AnimalTestPage = () => {
             <div className="screen_container">
                 <div className="center_container">
                     <div className="header_container_v1">
-                        <img style={{ 
-                            width: "450px", 
-                            marginTop : "45px"
-                        }} 
-                        src={`${process.env.PUBLIC_URL}/img/mainLogoNew.png`} />
+                        <img style={{
+                            width: "450px",
+                            marginTop: "45px"
+                        }}
+                            src={`${process.env.PUBLIC_URL}/img/mainLogoNew.png`} />
                     </div>
                     <div className="header_container_v2">
                         <GradientButton
                             content="Ai Animal Test"
-                            buttonStyle={{display: "none"}}
+                            buttonStyle={{ display: "none" }}
                             textStyle={{
                                 fontSize: "2.6rem",
                                 fontWeight: "800",
@@ -294,7 +332,7 @@ const AnimalTestPage = () => {
                                     textAlign: "center",
                                     backgroundColor: "white",
                                     paddingTop: "80px",
-                                    paddingBottom : "20px",
+                                    paddingBottom: "20px",
                                     borderRadius: "10px",
                                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
                                     border: "1px solid rgba(0, 0, 0, 0.1)",
@@ -302,7 +340,7 @@ const AnimalTestPage = () => {
                                     flexDirection: "column",
                                     alignItems: "center",
                                     justifyContent: "center",
-                                    
+
                                 }}
                             >
                                 {showRotatingImage ? (
@@ -341,16 +379,16 @@ const AnimalTestPage = () => {
                                     </span>
                                 )}
 
-                                <p style={{ 
-                                 fontSize: "3rem", 
-                                 marginTop: "100px", 
-                                 fontWeight: "bold",
-                                 color: "#333",
-                                 textDecoration: "underline",
-                                 textDecorationColor: "#0ea5e9",
-                                 textDecorationStyle: "wavy",
-                                 fontFamily: "Cafe24Ssurround"                         
-                                 }}>
+                                <p style={{
+                                    fontSize: "3rem",
+                                    marginTop: "100px",
+                                    fontWeight: "bold",
+                                    color: "#333",
+                                    textDecoration: "underline",
+                                    textDecorationColor: "#0ea5e9",
+                                    textDecorationStyle: "wavy",
+                                    fontFamily: "Cafe24Ssurround"
+                                }}>
                                     {animalData && animalData.type}
                                 </p>
                                 <p
@@ -365,8 +403,8 @@ const AnimalTestPage = () => {
                                     {animalData &&
                                         animalData.characteristics.map((characteristic, index) => (
                                             <p key={index} style={{
-                                                 margin: "0", 
-                                                 }}>
+                                                margin: "0",
+                                            }}>
                                                 {characteristic}
                                             </p>
                                         ))}
@@ -391,12 +429,12 @@ const AnimalTestPage = () => {
                                     textAlign: "center",
                                     backgroundColor: "white",
                                     paddingBottom: "30px",
-                                    paddingTop : "30px",
+                                    paddingTop: "30px",
                                     borderRadius: "10px",
                                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
                                     border: "1px solid rgba(0, 0, 0, 0.1)",
                                 }}
-                                
+
                             >
                                 <Webcam
                                     ref={webcamRef}
