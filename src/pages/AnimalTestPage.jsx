@@ -43,13 +43,67 @@ const AnimalTestPage = () => {
 
     const [showRotatingImage, setShowRotatingImage] = useState(true);
 
+    const fakeWeightsRef = useRef([0, 0, 0, 0, 0, 0]);
+    const intervalRef = useRef(null);
+    const focusRef = useRef(null);
+    const startButtonRef = useRef(null);
+
     useEffect(() => {
+
         if (gender == null) {
             navigate("/");
         } else {
             loadFiles();
         }
+        const handleKeyDown = (event) => {
+            if (event.key >= "1" && event.key <= "6") {
+                // 1부터 6까지의 숫자 키가 눌리면 해당 인덱스의 가중치 추가을 시작합니다.
+                const index = parseInt(event.key) - 1; // 인덱스는 0부터 시작하므로 입력된 키에서 1을 빼줍니다.
+
+                // 버튼 클릭 트리거
+                if (startButtonRef.current) {
+                    startButtonRef.current.click();
+                }
+                startFakeKeyInput(index);
+
+            }
+
+            // 시작버튼
+            if (event.key === 'w' || event.key === 'W') {
+                if (startButtonRef.current) {
+                    startButtonRef.current.click();
+                }
+            }
+            if (event.key === 'q' || event.key === 'Q') {
+
+                // 뒤로가기
+                setGender(null);
+                navigate("/");
+            }
+        };
+
+        const handleWindowFocus = () => {
+            if (focusRef.current) {
+                focusRef.current.focus();
+            }
+        };
+
+
+        window.addEventListener("keydown", handleKeyDown);
+        window.addEventListener("focus", handleWindowFocus);
+
+        // 컴포넌트가 마운트될 때 포커스를 설정합니다.
+        if (focusRef.current) {
+            focusRef.current.focus();
+        }
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+            window.removeEventListener("focus", handleWindowFocus);
+        };
+
     }, []);
+
 
     useEffect(() => {
         if (modelFile && weightsFile && metadataFile) {
@@ -74,6 +128,7 @@ const AnimalTestPage = () => {
         setBar5Percentage(0);
         setBar6Percentage(0);
         setResultIndex(0);
+        fakeWeightsRef.current = [0, 0, 0, 0, 0, 0];
     }
 
     function updateCumulativePredictions() {
@@ -102,29 +157,82 @@ const AnimalTestPage = () => {
     }
 
     async function loadFiles() {
-        setModelFile(await fetchFile(modelURL, "model.json"));
-        setWeightsFile(await fetchFile(weightsURL, "weights.bin"));
-        setMetadataFile(await fetchFile(metadataURL, "metadata.json"));
+        try {
+            const modelFile = await fetchFile(modelURL, "model.json");
+            const weightsFile = await fetchFile(weightsURL, "weights.bin");
+            const metadataFile = await fetchFile(metadataURL, "metadata.json");
+
+            console.log("modelFileBlob:", modelFile);
+            console.log("weightsFileBlob:", weightsFile);
+            console.log("metadataFileBlob:", metadataFile);
+
+            setModelFile(modelFile);
+            setWeightsFile(weightsFile);
+            setMetadataFile(metadataFile);
+        } catch (error) {
+            console.error("파일 로드 에러:", error);
+        }
     }
 
     async function loadModel() {
         console.log("init model");
-        setModel(await tmImage.loadFromFiles(modelFile, weightsFile, metadataFile));
+        try {
+
+            await Promise.all([modelFile, weightsFile, metadataFile]);
+            console.log("modelFile:", modelFile);
+            console.log("weightsFile:", weightsFile);
+            console.log("metadataFile:", metadataFile);
+
+            const loadedModel = await tmImage.loadFromFiles(modelFile, weightsFile, metadataFile);
+            setModel(loadedModel);
+        } catch (error) {
+            console.error("모델 로드 중 에러:", error);
+        }
     }
+
+    function startFakeKeyInput(index) {
+
+        fakeWeightsRef.current = fakeWeightsRef.current.map((weight, i) =>
+            i === index ? weight + 2 : weight
+        );
+        console.log("즉시 가중치 업데이트:", fakeWeightsRef.current);
+
+        // 1초 후에 한 번 더 업데이트
+        setTimeout(() => {
+            fakeWeightsRef.current = fakeWeightsRef.current.map((weight, i) =>
+                i === index ? weight + 2 : weight
+            );
+            console.log("1초 후 가중치 업데이트:", fakeWeightsRef.current);
+        }, 1000);
+    }
+
+
 
     async function predict() {
         if (model) {
-            let prediction = await model.predict(webcamRef.current.video);
-            console.log(prediction);
+            try {
+                const prediction = await model.predict(webcamRef.current.video);
+                console.log(prediction);
 
-            const newCumulativePredictions = cumulativePredictions.map(
-                (value, index) => value + prediction[index].probability + Math.random() * 0.2
-            );
+                // const newCumulativePredictions = cumulativePredictions.map(
+                //     (value, index) => value + prediction[index].probability + (Math.random()) * (0.1 + fakeWeightsRef.current[index])//.toFixed(2)*100 //+ (Math.random() - 0.4) * 0.05
+                // );
 
-            setCumulativePredictions(newCumulativePredictions);
-            console.log("result update");
+                //누적값 빼기
+                const newCumulativePredictions = cumulativePredictions.map(
+                    (value, index) => prediction[index].probability + (Math.random()) * (0.2 + fakeWeightsRef.current[index])
+                );
+
+                console.log("실제로 적용된 값 ", fakeWeightsRef.current)
+                setCumulativePredictions(newCumulativePredictions);
+
+                console.log("예측 업데이트:", newCumulativePredictions);
+
+            } catch (error) {
+                console.error("예측 중 에러:", error);
+            }
         } else {
-            console.log("model undefined");
+            console.log("모델이 정의되지 않았습니다.");
         }
     }
 
@@ -147,6 +255,8 @@ const AnimalTestPage = () => {
                     }, 1000);
                 }
             }, 1000);
+        }).catch(error => {
+            console.error("예측 시작 중 에러:", error);
         });
     }
 
@@ -168,15 +278,20 @@ const AnimalTestPage = () => {
     }
 
     return (
-        <div className="main_container">
+        <div className="main_container" ref={focusRef} tabIndex={-1} style={{ outline: "none" }}>
             <div className="screen_container">
                 <div className="center_container">
-                    {/* <div className="header_container_v1">
-                        <img style={{ width: "260px" }} src={`${process.env.PUBLIC_URL}/img/mainLogo.png`} />
-                    </div> */}
+                    <div className="header_container_v1">
+                        <img style={{
+                            width: "450px",
+                            marginTop: "45px"
+                        }}
+                            src={`${process.env.PUBLIC_URL}/img/mainLogoNew.png`} />
+                    </div>
                     <div className="header_container_v2">
                         <GradientButton
                             content="Ai Animal Test"
+                            buttonStyle={{ display: "none" }}
                             textStyle={{
                                 fontSize: "2.6rem",
                                 fontWeight: "800",
@@ -198,7 +313,7 @@ const AnimalTestPage = () => {
 
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <div style={{ marginRight: "5px" }}>
-                                <GradientButton
+                                {/* <GradientButton
                                     onClick={() => {
                                         setResultIndex((resultIndex + 1) % 6);
                                     }}
@@ -206,11 +321,13 @@ const AnimalTestPage = () => {
                                     buttonStyle={{
                                         fontSize: "1rem",
                                         fontWeight: "800",
+                                        // display: "none"
                                     }}
-                                />
+                                /> */}
                             </div>
                             <div style={{ marginRight: "5px" }}>
                                 <GradientButton
+                                    ref={startButtonRef}
                                     onClick={() => {
                                         setIsFinished(false);
                                         startPredicting();
@@ -245,7 +362,8 @@ const AnimalTestPage = () => {
                                     height: "100%",
                                     textAlign: "center",
                                     backgroundColor: "white",
-                                    padding: "20px",
+                                    paddingTop: "80px",
+                                    paddingBottom: "20px",
                                     borderRadius: "10px",
                                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
                                     border: "1px solid rgba(0, 0, 0, 0.1)",
@@ -253,18 +371,19 @@ const AnimalTestPage = () => {
                                     flexDirection: "column",
                                     alignItems: "center",
                                     justifyContent: "center",
+
                                 }}
                             >
                                 {showRotatingImage ? (
                                     <RotatingImage
-                                        height="24vh"
-                                        width="24vh"
+                                        height="28vh"
+                                        width="28vh"
                                         front={process.env.PUBLIC_URL + animalData.image}
                                         back={process.env.PUBLIC_URL + animalData.subImage}
                                     />
                                 ) : (
                                     <span>
-                                        <img
+                                        {/* <img
                                             src={process.env.PUBLIC_URL + animalData.image}
                                             alt={animalData.type}
                                             style={{
@@ -275,13 +394,13 @@ const AnimalTestPage = () => {
                                                 border: "5px solid gainsboro",
                                                 marginRight: "10px",
                                             }}
-                                        />
+                                        /> */}
                                         <img
                                             src={process.env.PUBLIC_URL + animalData.subImage}
                                             alt={animalData.type}
                                             style={{
-                                                width: "24vh",
-                                                height: "24vh",
+                                                width: "30vh",
+                                                height: "30vh",
                                                 objectFit: "cover",
                                                 borderRadius: "20px",
                                                 border: "5px solid gainsboro",
@@ -291,7 +410,16 @@ const AnimalTestPage = () => {
                                     </span>
                                 )}
 
-                                <p style={{ fontSize: "1.8rem", marginTop: "15px", fontWeight: "bold", color: "#333" }}>
+                                <p style={{
+                                    fontSize: "3rem",
+                                    marginTop: "100px",
+                                    fontWeight: "bold",
+                                    color: "#333",
+                                    textDecoration: "underline",
+                                    textDecorationColor: "#0ea5e9",
+                                    textDecorationStyle: "wavy",
+                                    fontFamily: "Cafe24Ssurround"
+                                }}>
                                     {animalData && animalData.type}
                                 </p>
                                 <p
@@ -305,7 +433,9 @@ const AnimalTestPage = () => {
                                 >
                                     {animalData &&
                                         animalData.characteristics.map((characteristic, index) => (
-                                            <p key={index} style={{ margin: "0" }}>
+                                            <p key={index} style={{
+                                                margin: "0",
+                                            }}>
                                                 {characteristic}
                                             </p>
                                         ))}
@@ -329,17 +459,19 @@ const AnimalTestPage = () => {
                                     height: "100%",
                                     textAlign: "center",
                                     backgroundColor: "white",
-                                    padding: "20px",
+                                    paddingBottom: "30px",
+                                    paddingTop: "30px",
                                     borderRadius: "10px",
                                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
                                     border: "1px solid rgba(0, 0, 0, 0.1)",
                                 }}
+
                             >
                                 <Webcam
                                     ref={webcamRef}
                                     mirrored={true}
-                                    width={"90%"}
-                                    height={"90%"}
+                                    width={"95%"}
+                                    height={"95%"}
                                     style={{ borderRadius: "10px" }}
                                     muted={false}
                                 />

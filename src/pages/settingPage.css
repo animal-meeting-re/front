@@ -56,7 +56,7 @@
 @media (max-aspect-ratio: 1/1) {
     .content-wrapper {
         position: absolute;
-        top: 50%;
+        top: 45%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
@@ -74,15 +74,15 @@
 }
 
 .main {
-    margin-top: 790px;
+    margin-top: 900px;
 }
 
 .header {
-    margin-top: 50px;
+    margin-top: 0px;
 }
 
 .mainLogo {
-    width: 450px;
+    width: 750px;
 }
 
 .character-wrap {

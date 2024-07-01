@@ -3,13 +3,13 @@ import ProgressBar from "@ramonak/react-progress-bar";
 
 const PercentageBar = (props) => {
     return (
-        <div style={{ display: "flex", width: "100%", alignItems: "center" }}>
+        <div style={{ display: "flex", width: "100%", alignItems: "center", height: "100%" }}>
             <img
                 src={props.iconSrc}
                 alt="icon"
                 style={{
-                    width: "24px",
-                    height: "24px",
+                    width: "44px",
+                    height: "35px",
                     marginRight: "5px",
                 }}
             />
@@ -19,14 +19,18 @@ const PercentageBar = (props) => {
                     textAlign: "left",
                     fontFamily: "Cafe24Ssurround",
                     alignItems: "center",
-                    fontSize: "1.2rem",
+                    fontSize: "1.4rem",
                 }}
             >
                 {props.title}
             </span>
 
-            <div style={{ width: "100%" }}>
-                <ProgressBar completed={props.percentage} bgColor={props.bgColor} baseBgColor={props.bgBaseColor} />
+            <div style={{ width: "100%", height: "100%" }}>
+                <ProgressBar 
+                completed={props.percentage} 
+                bgColor={props.bgColor} 
+                baseBgColor={props.bgBaseColor}
+                height="28px"  />
             </div>
         </div>
     );
