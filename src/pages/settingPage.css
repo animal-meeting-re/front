@@ -1,157 +1,29 @@
-.container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden; /* Prevents any overflow issues */
-}
-
-/* Pseudo-element for fixed background image */
-.container::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-image: url("../../public/img/mainBackgroundSplit.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    z-index: -1; /* Places the background behind the container content */
-}
-
-.noticeboard-wrapper {
-    left: 1476px;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 5;
-    position: fixed;
-}
-
-.participant-wrapper {
-    left: 230px;
-    z-index: 6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-}
-.content-wrapper {
+@media (min-width: 768px) {
+  .container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    position: fixed;
-    left: 545px;
-    width: 600px;
-    height: 1000px;
-    z-index: 2;
+  }
+
+  .content-wrapper {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
-@media (max-aspect-ratio: 1/1) {
-    .content-wrapper {
-        position: absolute;
-        top: 45%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
-
-.header,
-.main {
-    flex: 1;
-
-    width: 100%;
-    position: fixed;
+@media (max-width: 768px) {
+  .container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-}
+  }
 
-.main {
-    margin-top: 900px;
-}
-
-.header {
-    margin-top: 0px;
-}
-
-.mainLogo {
-    width: 750px;
-}
-
-.character-wrap {
-    width: 300px;
+  .content-wrapper {
     position: absolute;
-    z-index: 4;
-    bottom: 15%;
-}
-
-.character-wrap img {
-    width: 100%;
-}
-
-.speech-wrap {
-    width: 600px;
-    position: absolute;
-    z-index: 5;
-}
-
-.speech-wrap img {
-    width: 100%;
-}
-
-.select-wrap {
-    position: fixed;
-    z-index: 6;
-    width: 100px;
-    margin-bottom: 150px;
-    margin-left: 170px;
-}
-
-.character-name {
-    position: absolute;
-    font-family: "Cafe24Ssurround";
-    transform: rotate(-8deg);
-    top: 100px;
-    left: 55px;
-    font-size: 15px;
-}
-
-.speech-text {
-    position: absolute;
-    top: 130px;
-    left: 110px;
-    font-size: 20px;
-    font-family: "Cafe24Ssurround";
-}
-
-.selectBubble {
-    left: 350px;
-    top: 300px;
-    z-index: 5;
-    width: 380px;
-}
-
-.select-text {
-    position: absolute;
-    font-family: "Cafe24Ssurround";
-    z-index: 5;
-    width: 100px;
-    top: 115px;
-    left: 178px;
-    cursor: pointer;
-}
-
-.selected-gender-text {
-    color: black; /* 기본 색상 설정 */
-}
-
-.selected-gender-text.selected {
-    color: palevioletred; /* 선택된 경우의 색상 */
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
