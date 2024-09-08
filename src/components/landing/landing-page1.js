@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 export const LandingPage1 = () => {
   const navigate = useNavigate();
   const skip = () => {
-    navigate("/landing?step=3");
+    navigate("/?step=3");
   };
   return (
     <Container>

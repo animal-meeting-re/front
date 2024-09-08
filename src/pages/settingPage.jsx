@@ -3,8 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { GENDER, MODEL_URL, METADATA_URL, WEIGHTS_URL } from "../recoil/Atoms";
 import { Header } from "../components/header";
-import "./settingPage.css";
 import styled from "styled-components";
+import Male from "../assets/images/male.png";
+import Female from "../assets/images/female.png";
+import Checked from "../assets/images/checked.png";
+import UnChecked from "../assets/images/unChecked.png";
+import { COLORS } from "../theme";
 
 const SettingPage = () => {
   const navigate = useNavigate();
@@ -12,7 +16,7 @@ const SettingPage = () => {
   const setModelURL = useSetRecoilState(MODEL_URL);
   const setMetadataURL = useSetRecoilState(METADATA_URL);
   const setWeightsURL = useSetRecoilState(WEIGHTS_URL);
-  const [isPreviousTypingFinished, setPreviousTypingFinished] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
 
   useEffect(() => {
     setSelectedGender(null);
@@ -49,51 +53,181 @@ const SettingPage = () => {
     setModelURL(modelURL);
     setMetadataURL(metadataURL);
     setWeightsURL(weightsURL);
+    setSelectedGender(gender);
     navigate("/test");
   };
 
+  const handleNext = () => {
+    if (currentStep < 3) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      // navigate("/next-page");
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
   return (
-    <div className="container">
-      <Header title="미팅숲" />
+    <Container>
+      <Header title="미동숲" />
       <Choose>성별을 선택해 주세요</Choose>
-      <div className="select-text">
+      <GenderContainer>
         <Gender
           onClick={() => handleGenderSelect("MALE")}
-          onMouseEnter={() => setSelectedGender("MALE")}
-          onMouseLeave={() => setSelectedGender(null)}
-          className={
-            selectedGender === "MALE"
-              ? "pointer selected-gender-text selected"
-              : "pointer selected-gender-text"
-          }
+          className="pointer selected-gender-text"
         >
-          남자
+          <GenderImg src={Male} />
+          <GenderText>남자</GenderText>
+          <CheckmarkImg src={selectedGender === "MALE" ? Checked : UnChecked} />
         </Gender>
         <Gender
           onClick={() => handleGenderSelect("FEMALE")}
-          onMouseEnter={() => setSelectedGender("FEMALE")}
-          onMouseLeave={() => setSelectedGender(null)}
-          className={
-            selectedGender === "FEMALE"
-              ? "pointer selected-gender-text selected"
-              : "pointer selected-gender-text"
-          }
+          className="pointer selected-gender-text"
         >
-          여자
+          <GenderImg src={Female} />
+          <GenderText>여자</GenderText>
+          <CheckmarkImg
+            src={selectedGender === "FEMALE" ? Checked : UnChecked}
+          />
         </Gender>
-      </div>
-    </div>
+      </GenderContainer>
+      <ProContainer>
+        <ButtonContainer>
+          <BackButton onClick={handleBack} disabled={currentStep === 1}>
+            뒤로
+          </BackButton>
+          <NextButton onClick={handleNext} disabled={currentStep === 3}>
+            다음
+          </NextButton>
+        </ButtonContainer>
+        <ProgressBar>
+          <Progress width={(currentStep / 3) * 100 + "%"} />
+        </ProgressBar>
+      </ProContainer>
+    </Container>
   );
 };
 
 export default SettingPage;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const Choose = styled.p`
   font-family: "jalnan";
   font-size: 1.3rem;
 `;
 
+const GenderContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+`;
+
 const Gender = styled.button`
   width: 151px;
-  height: 151px;
+  height: 174px;
+  border-radius: 40px;
+  border: 1px solid var(--line_02, #e5e5e5);
+  background: var(--back_02, #fff);
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+`;
+
+const GenderImg = styled.img`
+  width: 128px;
+  height: auto;
+  padding-top: 15px;
+`;
+
+const GenderText = styled.p`
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0px;
+`;
+
+const CheckmarkImg = styled.img`
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+`;
+
+const ProgressBar = styled.div`
+  position: relative;
+  height: 5px;
+  width: 80%;
+  background-color: #d3d3d3;
+  margin: 20px 0;
+`;
+
+const Progress = styled.div`
+  height: 5px;
+  background-color: ${COLORS.main};
+  width: ${(props) => props.width};
+  transition: width 0.3s ease-in-out;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-top: 20px;
+`;
+
+const BackButton = styled.button`
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 20px;
+  padding: 5px 15px;
+  width: 60px;
+  height: 36px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: black;
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+  }
+`;
+
+const NextButton = styled.button`
+  display: flex;
+  align-items: center;
+  background-color: #a1e9ba;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+`;
+
+const ProContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
 `;

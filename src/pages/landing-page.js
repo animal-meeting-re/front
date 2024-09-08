@@ -21,20 +21,20 @@ export const LandingPage = () => {
   const handleSwipeLeft = () => {
     if (step === "1") {
       setDirection("left");
-      navigate("/landing?step=2");
+      navigate("/?step=2");
     } else if (step === "2") {
       setDirection("left");
-      navigate("/landing?step=3");
+      navigate("/?step=3");
     }
   };
 
   const handleSwipeRight = () => {
     if (step === "3") {
       setDirection("right");
-      navigate("/landing?step=2");
+      navigate("/?step=2");
     } else if (step === "2") {
       setDirection("right");
-      navigate("/landing?step=1");
+      navigate("/?step=1");
     }
   };
 

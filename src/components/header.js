@@ -15,7 +15,7 @@ export const Header = ({ title }) => {
 const Container = styled.div`
   width: 100%;
   height: 48px;
-  background-color: ${COLORS.animal_main};
+  background-color: white;
   display: flex;
   align-items: center;
 `;
@@ -27,8 +27,8 @@ const Back = styled.img`
 `;
 
 const Title = styled.h1`
-  font-size: 18px;
-  color: white;
+  font-size: 1.3rem;
   margin: 0;
   font-family: "jalnan";
+  color: ${COLORS.main};
 `;
