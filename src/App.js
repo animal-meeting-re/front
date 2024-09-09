@@ -5,6 +5,7 @@ import AnimalTestPage from "./pages/AnimalTestPage";
 import GuidePage from "./pages/GuidePage.jsx";
 import { LandingPage } from "./pages/landing-page.js";
 import SettingPage from "./pages/settingPage.jsx";
+import MeetingChoice from "./pages/meetingChoice.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             </BezierProvider>
           }
         />
+        <Route path="/choice" element={<MeetingChoice />} />
       </Routes>
     </BrowserRouter>
   );
