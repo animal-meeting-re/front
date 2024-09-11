@@ -6,7 +6,7 @@ import GuidePage from "./pages/GuidePage.jsx";
 import { LandingPage } from "./pages/landing-page.js";
 import SettingPage from "./pages/settingPage.jsx";
 import MeetingChoice from "./pages/meetingChoice.jsx";
-
+import ApplyPage from "./pages/applyPage.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -23,6 +23,7 @@ function App() {
           }
         />
         <Route path="/choice" element={<MeetingChoice />} />
+        <Route path="/apply" element={<ApplyPage />} />
       </Routes>
     </BrowserRouter>
   );
