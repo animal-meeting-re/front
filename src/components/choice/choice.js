@@ -9,13 +9,19 @@ import unChecked from "../../assets/images/unChecked.png";
 
 import { partyContent, meetingContent } from "./infom";
 
+import { useNavigate } from "react-router-dom";
+
 const Choice = () => {
+  const navigate = useNavigate();
   const [clickState, setClickState] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
 
   const handleChoice = (state) => {
     setClickState(state);
     setIsVisible(true);
+  };
+  const moveToNext = () => {
+    navigate("/apply");
   };
 
   return (
@@ -68,7 +74,9 @@ const Choice = () => {
           {clickState === "meeting" && meetingContent}
         </p>
       </InformBox>
-      <Next>다음</Next>
+      <Next isVisible={isVisible} onClick={moveToNext}>
+        다음
+      </Next>
     </ChoiceContainer>
   );
 };
@@ -80,6 +88,9 @@ const ChoiceContainer = styled.div`
   flex-direction: column;
   gap: 25px;
   padding: 24px;
+  * {
+    font-family: "Pretendard";
+  }
 `;
 
 const Title = styled.div`
@@ -101,7 +112,7 @@ const BtnContainer = styled.div`
 const ChoiceBtn = styled.button`
   border: 1px solid ${COLORS.line_02};
   box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.2);
-  width: 151px;
+  width: 45%;
   height: 210px;
   border-radius: 40px;
   position: relative;
@@ -121,7 +132,7 @@ const InnerBox = styled.div`
   align-items: center;
 `;
 const Span = styled.span`
-  font-size: ${(props) => (props.state === "Title" ? "14px" : "11px")};
+  font-size: ${(props) => (props.state === "Title" ? "16px" : "12px")};
   font-weight: ${(props) => (props.state === "Content" ? null : "700")};
   color: ${(props) =>
     props.state === "Title"
@@ -150,14 +161,16 @@ const InformBox = styled.div`
   height: 20vh;
   visibility: ${(props) => (props.isVisible ? "visible" : "hidden")};
   h4 {
-    font-size: 1rem;
+    font-size: 18px;
+    margin-bottom: 0;
   }
 `;
 
 const Next = styled.button`
   width: 100%;
   height: 52px;
-  background-color: ${COLORS.animal_main};
+  background-color: ${(props) =>
+    props.isVisible ? `${COLORS.animal_main}` : `${COLORS.line_02}`};
   border-radius: 26px;
   border: none;
   color: ${COLORS.back_02};

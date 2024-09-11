@@ -6,10 +6,12 @@ const InformUL = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 2px;
+  margin: 12px 0;
 `;
 const InformLi = styled.li`
   color: ${COLORS.font_01};
   /* background-color: aliceblue; */
+  font-size: 15px;
   list-style: none;
 `;
 
@@ -23,7 +25,8 @@ export const partyContent = (
 
 export const meetingContent = (
   <InformUL>
+    <InformLi>🤳 비대면 만남이 더 편해요</InformLi>
     <InformLi>🛝 무료로 간단하게 체험해보고 싶어요</InformLi>
-    <InformLi>🤝 먼저 깊게 연락해본 후에 만나보고 싶어요</InformLi>
+    <InformLi>💌 먼저 깊게 연락해본 후에 만나보고 싶어요</InformLi>
   </InformUL>
 );
