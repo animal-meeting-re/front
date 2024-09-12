@@ -3,7 +3,7 @@
         "animalTypes": [
             {
                 "image": "img/resultImg/man_dog.jpg",
-                "subImage": "img/man-animal/dog.png",
+                "subImage": "img/man-animal/man_dog.png",
                 "typeEnglish": "DOG",
                 "type": "강아지상",
                 "characteristics": [
@@ -13,7 +13,7 @@
             },
             {
                 "image": "img/resultImg/man_cat.png",
-                "subImage": "img/man-animal/cat-man.png",
+                "subImage": "img/man-animal/man_cat.png",
                 "typeEnglish": "CAT",
                 "type": "고양이상",
                 "characteristics": [
@@ -23,7 +23,7 @@
             },
             {
                 "image": "img/resultImg/man_bear.jpeg",
-                "subImage": "img/man-animal/bear.png",
+                "subImage": "img/man-animal/man_bear.png",
                 "typeEnglish": "BEAR",
                 "type": "곰상",
                 "characteristics": [
@@ -33,7 +33,7 @@
             },
             {
                 "image": "img/resultImg/man_dinosaur.jpeg",
-                "subImage": "img/man-animal/dinosaur.png",
+                "subImage": "img/man-animal/man_dinosaur.png",
                 "typeEnglish": "DINOSAUR",
                 "type": "공룡상",
                 "characteristics": [
@@ -43,7 +43,7 @@
             },
             {
                 "image": "img/resultImg/man_wolf.jpeg",
-                "subImage": "img/man-animal/wolf.png",
+                "subImage": "img/man-animal/man_wolf.png",
                 "typeEnglish": "WOLF",
                 "type": "늑대상",
                 "characteristics": [
@@ -53,7 +53,7 @@
             },
             {
                 "image": "img/resultImg/man_rabbit.jpeg",
-                "subImage": "img/man-animal/rabbit-man.png",
+                "subImage": "img/man-animal/man_rabbit.png",
                 "typeEnglish": "RABBIT",
                 "type": "토끼상",
                 "characteristics": [
