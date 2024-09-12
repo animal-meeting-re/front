@@ -569,6 +569,7 @@ const ResultText = styled.p`
 
 const ResultDescriptionWrapper = styled.article`
   margin-top: 24px;
+  width: 100%;
 `;
 const ResultDescriptionTitle = styled.h3`
   font-size: 18px;
