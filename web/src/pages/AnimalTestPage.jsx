@@ -670,7 +670,7 @@ const ResultBtnContainer = styled.footer`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 15px;
 `;
 const GoMeetingBtn = styled.button`
   font-size: 18px;
