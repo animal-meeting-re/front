@@ -4,6 +4,7 @@ import * as tmImage from "@teachablemachine/image";
 import Webcam from "react-webcam";
 import GradientButton from "../components/base/GradientButton";
 import PercentageBar from "../components/base/PercentageBar";
+import ResultPercentageBar from "../components/base/ResultPercentageBar";
 import RotatingImage from "../components/base/RotatingImage";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { GENDER, MODEL_URL, METADATA_URL, WEIGHTS_URL } from "../recoil/Atoms";
@@ -271,6 +272,64 @@ const AnimalTestPage = () => {
     }, 5000);
   }
 
+  const percentageBarsData = [
+    {
+      title: "강아지",
+      iconSrc: gender === "MALE"
+        ? process.env.PUBLIC_URL + "img/man-animal/dog.png"
+        : "img/woman-animal/dog-woman.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar1Percentage
+    },
+    {
+      title: "고양이",
+      iconSrc: gender === "MALE"
+        ? process.env.PUBLIC_URL + "img/man-animal/cat-man.png"
+        : "img/woman-animal/cat-woman.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar2Percentage
+    },
+    {
+      title: gender === "MALE" ? "토끼" : "햄스터",
+      iconSrc: gender === "MALE"
+        ? process.env.PUBLIC_URL + "img/man-animal/rabbit-man.png"
+        : "img/woman-animal/hamster.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar6Percentage
+    },
+    {
+      title: gender === "MALE" ? "곰" : "여우",
+      iconSrc: gender === "MALE"
+        ? process.env.PUBLIC_URL + "img/man-animal/bear.png"
+        : "img/woman-animal/fox.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar3Percentage
+    },
+    {
+      title: gender === "MALE" ? "공룡" : "토끼",
+      iconSrc: gender === "MALE"
+        ? process.env.PUBLIC_URL + "img/man-animal/dinosaur.png"
+        : "img/woman-animal/rabbit-woman.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar4Percentage
+    },
+    {
+      title: gender === "MALE" ? "늑대" : "사슴",
+      iconSrc: gender === "MALE"
+        ? process.env.PUBLIC_URL + "img/man-animal/wolf.png"
+        : "img/woman-animal/deer.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar5Percentage
+    }
+  ];
+  const sortedBars = [...percentageBarsData].sort((a, b) => b.percentage - a.percentage);
+
   return (
     <MainContainer ref={focusRef} tabIndex={-1}>
       <Header title="미동숲" />
@@ -295,37 +354,30 @@ const AnimalTestPage = () => {
           <WebcamContainer>
             {isFinished ? (
               <ResultContainer>
-                {showRotatingImage ? (
-                  <RotatingImage
-                    height="28vh"
-                    width="28vh"
-                    front={process.env.PUBLIC_URL + animalData.image}
-                    back={process.env.PUBLIC_URL + animalData.subImage}
-                  />
-                ) : (
-                  <img
-                    src={process.env.PUBLIC_URL + animalData.subImage}
-                    alt={animalData.type}
-                    style={{
-                      width: "30vh",
-                      height: "30vh",
-                      objectFit: "cover",
-                      borderRadius: "20px",
-                      border: "5px solid gainsboro",
-                      marginLeft: "10px",
-                    }}
-                  />
-                )}
+                <FinishText>측정완료!</FinishText>
+                <ResultImg 
+                  src={process.env.PUBLIC_URL + animalData.subImage}
+                  alt="동물상 결과 이미지"
+                />
+                
                 <ResultText>{animalData && animalData.type}</ResultText>
-                <ResultDescription>
-                  {animalData &&
-                    animalData.characteristics.map((characteristic, index) => (
-                      <p key={index}>{characteristic}</p>
-                    ))}
-                </ResultDescription>
-                <ResultCelebrities>
-                  {animalData && animalData.celebrities}
-                </ResultCelebrities>
+
+                <ResultDescriptionWrapper>
+                  <ResultDescriptionTitle>동물상 특징</ResultDescriptionTitle>
+                    {animalData &&
+                      animalData.characteristics.map((characteristic, index) => (
+                        <ResultDescription key={index}>{characteristic}</ResultDescription>
+                      ))}
+                  
+                </ResultDescriptionWrapper>
+                
+                <ResultDescriptionWrapper>
+                  <ResultDescriptionTitle>대표 연예인</ResultDescriptionTitle>
+                  <ResultDescription>
+                    {animalData && animalData.celebrities}
+                  </ResultDescription>
+                </ResultDescriptionWrapper>
+
               </ResultContainer>
             ) : (
               <WebcamBox>
@@ -346,7 +398,23 @@ const AnimalTestPage = () => {
             {countdown > 0 && <Countdown>{Math.ceil(countdown)}</Countdown>}
             {startMessage && <StartMessage>{startMessage}</StartMessage>}
           </WebcamContainer>
-          <PercentageBarContainer>
+          {isFinished ? 
+            <ResultDescriptionWrapper>
+              <ResultDescriptionTitle>닮은 동물 비율</ResultDescriptionTitle>
+              <PercentageBarContainer2>
+                {sortedBars.map((bar, index) => (
+                  <ResultPercentageBar
+                    key={index}
+                    title={bar.title}
+                    iconSrc={bar.iconSrc}
+                    bgColor={bar.bgColor}
+                    bgBaseColor={bar.bgBaseColor}
+                    percentage={bar.percentage}
+                  />
+                ))}
+              </PercentageBarContainer2>
+            </ResultDescriptionWrapper>
+          : <PercentageBarContainer>
             <div
               style={{ display: "flex", flexDirection: "column", width: "50%" }}
             >
@@ -421,9 +489,16 @@ const AnimalTestPage = () => {
                 percentage={bar5Percentage}
               />
             </div>
-          </PercentageBarContainer>
+          </PercentageBarContainer>}
+          
         </CenterContainer>
       </ScreenContainer>
+      {isFinished ? 
+      <ResultBtnContainer>
+        <GoMeetingBtn>동물상 이상형과 미팅하러 가기!</GoMeetingBtn>
+        <RetryBtn onClick={() => {setIsFinished(false)}}>동물상 다시 측정하기</RetryBtn>
+      </ResultBtnContainer>
+      :
       <div style={{ marginRight: "5px" }}>
         <GradientButton
           ref={startButtonRef}
@@ -437,7 +512,7 @@ const AnimalTestPage = () => {
             fontWeight: "800",
           }}
         />
-      </div>
+      </div>}
     </MainContainer>
   );
 };
@@ -448,13 +523,18 @@ const MainContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  font-family: Pretendard;
+  color: #111;
 `;
 
 const ScreenContainer = styled.div`
-  padding: 0px 32px;
+  max-width: 400px;
+  margin: auto;
 `;
 
-const CenterContainer = styled.div``;
+const CenterContainer = styled.div`
+  padding: 27px 32px;
+`;
 
 const WebcamContainer = styled.div`
   width: 100%;
@@ -464,46 +544,42 @@ const WebcamContainer = styled.div`
 `;
 
 const ResultContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  background-color: white;
-  padding-top: 80px;
-  padding-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
-
-const ResultText = styled.p`
-  font-size: 3rem;
-  margin-top: 100px;
+const FinishText = styled.p`
+  font-size: 24px;
   font-weight: bold;
-  color: #333;
-  text-decoration: underline;
-  text-decoration-color: #0ea5e9;
-  text-decoration-style: wavy;
-  font-family: "Cafe24Ssurround";
-`;
-
-const ResultDescription = styled.p`
-  font-size: 1.5rem;
-  margin-top: 10px;
-  color: #555;
-  line-height: 1.6;
   margin: 0;
 `;
+const ResultImg = styled.img`
+  width: 215px;
+  margin: 4px 0 8px;
+  aspect-ratio: 1 / 1;
+`;
 
-const ResultCelebrities = styled.p`
-  font-size: 1.5rem;
-  margin-top: 10px;
-  color: #555;
-  line-height: 1.6;
-  font-family: "Cafe24Ssurround";
+const ResultText = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 8px;
+`;
+
+const ResultDescriptionWrapper = styled.article`
+  margin-top: 24px;
+`;
+const ResultDescriptionTitle = styled.h3`
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 8px;
+`;
+const ResultDescription = styled.p`
+  font-size: 15px;
+  line-height: 1.47;
+  margin: 0;
 `;
 
 const WebcamBox = styled.div`
@@ -548,4 +624,45 @@ const PercentageBarContainer = styled.div`
   border-radius: 8px;
   border: 2px solid #111;
   gap: 10px;
+`;
+
+const PercentageBarContainer2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #E5E5E5;
+  gap: 16px;
+`;
+
+const ResultBtnContainer = styled.footer`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+`;
+const GoMeetingBtn = styled.button`
+  font-size: 18px;
+  font-weight: bold;
+  color: #FFF;
+  padding: 13px 48px;
+  border: none;
+  background-color: #50CD7B;
+  border-radius: 26px;
+  font-family: Pretendard;
+  line-height: 1.44;
+`;
+const RetryBtn = styled.button`
+  border: none;
+  background-color: none;
+  text-decoration: underline;
+  font-size: 16px;
+  font-weight: 600;
+  color: #999;
+  background-color: transparent;
+  font-family: Pretendard;
+  margin-bottom: 20px;
 `;
