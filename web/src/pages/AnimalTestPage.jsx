@@ -676,7 +676,7 @@ const GoMeetingBtn = styled.button`
   font-size: 18px;
   font-weight: bold;
   color: #fff;
-  padding: 12px 48px;
+  padding: 13px 48px;
   border: none;
   background-color: #50cd7b;
   border-radius: 26px;
