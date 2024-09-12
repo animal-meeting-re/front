@@ -57,20 +57,6 @@ const SettingPage = () => {
     navigate("/test");
   };
 
-  const handleNext = () => {
-    if (currentStep < 3) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      // navigate("/next-page");
-    }
-  };
-
-  const handleBack = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
   return (
     <Container>
       <Header />
