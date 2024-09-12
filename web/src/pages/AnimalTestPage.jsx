@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as tmImage from "@teachablemachine/image";
 import Webcam from "react-webcam";
+import GradientButton from "../components/base/GradientButton";
 import PercentageBar from "../components/base/PercentageBar";
+import ResultPercentageBar from "../components/base/ResultPercentageBar";
 import RotatingImage from "../components/base/RotatingImage";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { GENDER, MODEL_URL, METADATA_URL, WEIGHTS_URL } from "../recoil/Atoms";
@@ -10,7 +12,6 @@ import { getAnimalTypeDetailsByIndex } from "../data/animalData";
 import { fetchFile } from "../utils/FileUtil";
 import styled from "styled-components";
 import { Header } from "../components/header";
-import { COLORS } from "../theme";
 
 const AnimalTestPage = () => {
   const navigate = useNavigate();
@@ -43,10 +44,19 @@ const AnimalTestPage = () => {
   const [animalData, setAnimalData] = useState();
 
   const [showRotatingImage, setShowRotatingImage] = useState(true);
-  const [isStarted, setIsStarted] = useState(false); // 시작 여부 상태
 
   const videoConstraints = {
     facingMode: "user",
+    // advanced: [
+    //   { width: { exact: 2560 }, height: { exact: 1440 } }, // QHD
+    //   { width: { exact: 1920 }, height: { exact: 1080 } }, // Full HD
+    //   { width: { exact: 1280 }, height: { exact: 720 } }, // HD
+    //   { width: { exact: 1024 }, height: { exact: 576 } }, // 1024x576
+    //   { width: { exact: 900 }, height: { exact: 506 } }, // 900x506
+    //   { width: { exact: 800 }, height: { exact: 450 } }, // 800x450
+    //   { width: { exact: 640 }, height: { exact: 360 } }, // nHD
+    //   { width: { exact: 320 }, height: { exact: 180 } }, // QVGA
+    // ],
   };
 
   const fakeWeightsRef = useRef([0, 0, 0, 0, 0, 0]);
@@ -226,7 +236,6 @@ const AnimalTestPage = () => {
         let countdownTime = 3;
         setCountdown(countdownTime);
         setStartMessage("");
-        setIsStarted(true); // 시작됨으로 설정
 
         const countdownInterval = setInterval(() => {
           countdownTime -= 1;
@@ -263,46 +272,120 @@ const AnimalTestPage = () => {
     }, 5000);
   }
 
+  const percentageBarsData = [
+    {
+      title: "강아지",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_dog.png"
+          : "img/woman-animal/dog-woman.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar1Percentage,
+    },
+    {
+      title: "고양이",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_cat.png"
+          : "img/woman-animal/cat-woman.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar2Percentage,
+    },
+    {
+      title: gender === "MALE" ? "토끼" : "햄스터",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_rabbit.png"
+          : "img/woman-animal/hamster.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar6Percentage,
+    },
+    {
+      title: gender === "MALE" ? "곰" : "여우",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_bear.png"
+          : "img/woman-animal/fox.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar3Percentage,
+    },
+    {
+      title: gender === "MALE" ? "공룡" : "토끼",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_dino.png"
+          : "img/woman-animal/rabbit-woman.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar4Percentage,
+    },
+    {
+      title: gender === "MALE" ? "늑대" : "사슴",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_wolf.png"
+          : "img/woman-animal/deer.png",
+      bgColor: "#50CD7B",
+      bgBaseColor: "#d9d9d9",
+      percentage: bar5Percentage,
+    },
+  ];
+  const sortedBars = [...percentageBarsData].sort(
+    (a, b) => b.percentage - a.percentage
+  );
+
   return (
     <MainContainer ref={focusRef} tabIndex={-1}>
       <Header title="미동숲" />
       <ScreenContainer>
-        <Caution>배경에 방해요소가 없을수록 측정결과가 정확해요!</Caution>
         <CenterContainer>
+          {/* <OptionContainer>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <RegistrationForm
+                resultIndex={resultIndex}
+                gender={gender}
+                bar1Percentage={bar1Percentage}
+                bar2Percentage={bar2Percentage}
+                bar3Percentage={bar3Percentage}
+                bar4Percentage={bar4Percentage}
+                bar5Percentage={bar5Percentage}
+                bar6Percentage={bar6Percentage}
+                showRotatingImage={showRotatingImage}
+                setShowRotatingImage={setShowRotatingImage}
+              />
+            </div>
+          </OptionContainer> */}
           <WebcamContainer>
             {isFinished ? (
               <ResultContainer>
-                {showRotatingImage ? (
-                  <RotatingImage
-                    height="28vh"
-                    width="28vh"
-                    front={process.env.PUBLIC_URL + animalData.image}
-                    back={process.env.PUBLIC_URL + animalData.subImage}
-                  />
-                ) : (
-                  <img
-                    src={process.env.PUBLIC_URL + animalData.subImage}
-                    alt={animalData.type}
-                    style={{
-                      width: "30vh",
-                      height: "30vh",
-                      objectFit: "cover",
-                      borderRadius: "20px",
-                      border: "5px solid gainsboro",
-                      marginLeft: "10px",
-                    }}
-                  />
-                )}
+                <FinishText>측정완료!</FinishText>
+                <ResultImg
+                  src={process.env.PUBLIC_URL + animalData.subImage}
+                  alt="동물상 결과 이미지"
+                />
+
                 <ResultText>{animalData && animalData.type}</ResultText>
-                <ResultDescription>
+
+                <ResultDescriptionWrapper>
+                  <ResultDescriptionTitle>동물상 특징</ResultDescriptionTitle>
                   {animalData &&
                     animalData.characteristics.map((characteristic, index) => (
-                      <p key={index}>{characteristic}</p>
+                      <ResultDescription key={index}>
+                        {characteristic}
+                      </ResultDescription>
                     ))}
-                </ResultDescription>
-                <ResultCelebrities>
-                  {animalData && animalData.celebrities}
-                </ResultCelebrities>
+                </ResultDescriptionWrapper>
+
+                <ResultDescriptionWrapper>
+                  <ResultDescriptionTitle>대표 연예인</ResultDescriptionTitle>
+                  <ResultDescription>
+                    {animalData && animalData.celebrities}
+                  </ResultDescription>
+                </ResultDescriptionWrapper>
               </ResultContainer>
             ) : (
               <WebcamBox>
@@ -315,26 +398,45 @@ const AnimalTestPage = () => {
                   muted={false}
                   screenshotFormat="image/jpeg"
                   videoConstraints={videoConstraints}
+                  // onUserMediaError={onMediaSuccess}
+                  // onUserMedia={onMediaError}
                 />
               </WebcamBox>
             )}
             {countdown > 0 && <Countdown>{Math.ceil(countdown)}</Countdown>}
             {startMessage && <StartMessage>{startMessage}</StartMessage>}
           </WebcamContainer>
-          {isStarted && (
+          {isFinished ? (
+            <ResultDescriptionWrapper>
+              <ResultDescriptionTitle>닮은 동물 비율</ResultDescriptionTitle>
+              <PercentageBarContainer2>
+                {sortedBars.map((bar, index) => (
+                  <ResultPercentageBar
+                    key={index}
+                    title={bar.title}
+                    iconSrc={bar.iconSrc}
+                    bgColor={bar.bgColor}
+                    bgBaseColor={bar.bgBaseColor}
+                    percentage={bar.percentage}
+                  />
+                ))}
+              </PercentageBarContainer2>
+            </ResultDescriptionWrapper>
+          ) : (
             <PercentageBarContainer>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   width: "50%",
+                  gap: "15px",
                 }}
               >
                 <PercentageBar
                   title="강아지"
                   iconSrc={
                     gender === "MALE"
-                      ? process.env.PUBLIC_URL + "img/man-animal/dog.png"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_dog.png"
                       : "img/woman-animal/dog-woman.png"
                   }
                   bgColor="#50CD7B"
@@ -345,7 +447,7 @@ const AnimalTestPage = () => {
                   title="고양이"
                   iconSrc={
                     gender === "MALE"
-                      ? process.env.PUBLIC_URL + "img/man-animal/cat-man.png"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_cat.png"
                       : "img/woman-animal/cat-woman.png"
                   }
                   bgColor="#50CD7B"
@@ -356,7 +458,7 @@ const AnimalTestPage = () => {
                   title={gender === "MALE" ? "토끼" : "햄스터"}
                   iconSrc={
                     gender === "MALE"
-                      ? process.env.PUBLIC_URL + "img/man-animal/rabbit-man.png"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_rabbit.png"
                       : "img/woman-animal/hamster.png"
                   }
                   bgColor="#50CD7B"
@@ -369,13 +471,14 @@ const AnimalTestPage = () => {
                   display: "flex",
                   flexDirection: "column",
                   width: "50%",
+                  gap: "15px",
                 }}
               >
                 <PercentageBar
                   title={gender === "MALE" ? "곰" : "여우"}
                   iconSrc={
                     gender === "MALE"
-                      ? process.env.PUBLIC_URL + "img/man-animal/bear.png"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_bear.png"
                       : "img/woman-animal/fox.png"
                   }
                   bgColor="#50CD7B"
@@ -386,7 +489,7 @@ const AnimalTestPage = () => {
                   title={gender === "MALE" ? "공룡" : "토끼"}
                   iconSrc={
                     gender === "MALE"
-                      ? process.env.PUBLIC_URL + "img/man-animal/dinosaur.png"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_dino.png"
                       : "img/woman-animal/rabbit-woman.png"
                   }
                   bgColor="#50CD7B"
@@ -397,7 +500,7 @@ const AnimalTestPage = () => {
                   title={gender === "MALE" ? "늑대" : "사슴"}
                   iconSrc={
                     gender === "MALE"
-                      ? process.env.PUBLIC_URL + "img/man-animal/wolf.png"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_wolf.png"
                       : "img/woman-animal/deer.png"
                   }
                   bgColor="#50CD7B"
@@ -408,20 +511,35 @@ const AnimalTestPage = () => {
             </PercentageBarContainer>
           )}
         </CenterContainer>
-        {!isStarted && ( // 시작 전에는 시작 버튼을 보여줌
-          <div>
-            <StartBtn
-              ref={startButtonRef}
-              onClick={() => {
-                setIsFinished(false);
-                startPredicting();
-              }}
-            >
-              시작
-            </StartBtn>
-          </div>
-        )}
       </ScreenContainer>
+      {isFinished ? (
+        <ResultBtnContainer>
+          <GoMeetingBtn>동물상 이상형과 미팅하러 가기!</GoMeetingBtn>
+          <RetryBtn
+            onClick={() => {
+              setIsFinished(false);
+            }}
+          >
+            동물상 다시 측정하기
+          </RetryBtn>
+        </ResultBtnContainer>
+      ) : (
+        <div style={{ marginRight: "5px" }}>
+          <GradientButton
+            ref={startButtonRef}
+            onClick={() => {
+              setIsFinished(false);
+              startPredicting();
+            }}
+            content="시작"
+            buttonStyle={{
+              fontSize: "1rem",
+              fontWeight: "800",
+              margin: "auto",
+            }}
+          />
+        </div>
+      )}
     </MainContainer>
   );
 };
@@ -432,82 +550,74 @@ const MainContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  font-family: Pretendard;
+  color: #111;
 `;
 
 const ScreenContainer = styled.div`
-  padding: 0px 32px;
+  max-width: 400px;
+  margin: auto;
 `;
 
-const Caution = styled.p`
-  color: ${COLORS.font_03};
-  font-size: 1rem;
-  text-align: center;
-  /* margin: 0px; */
-  margin-bottom: 0px;
+const CenterContainer = styled.div`
+  padding: 27px 32px;
 `;
-
-const CenterContainer = styled.div``;
 
 const WebcamContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 15px;
 `;
 
 const ResultContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  background-color: white;
-  padding-top: 80px;
-  padding-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
-
-const ResultText = styled.p`
-  font-size: 3rem;
-  margin-top: 100px;
+const FinishText = styled.p`
+  font-size: 24px;
   font-weight: bold;
-  color: #333;
-  text-decoration: underline;
-  text-decoration-color: #0ea5e9;
-  text-decoration-style: wavy;
-  font-family: "Cafe24Ssurround";
-`;
-
-const ResultDescription = styled.p`
-  font-size: 1.5rem;
-  margin-top: 10px;
-  color: #555;
-  line-height: 1.6;
   margin: 0;
 `;
+const ResultImg = styled.img`
+  width: 215px;
+  margin: 4px 0 8px;
+  aspect-ratio: 1 / 1;
+`;
 
-const ResultCelebrities = styled.p`
-  font-size: 1.5rem;
-  margin-top: 10px;
-  color: #555;
-  line-height: 1.6;
-  font-family: "Cafe24Ssurround";
+const ResultText = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 8px;
+`;
+
+const ResultDescriptionWrapper = styled.article`
+  margin-top: 24px;
+  width: 100%;
+`;
+const ResultDescriptionTitle = styled.h3`
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 8px;
+`;
+const ResultDescription = styled.p`
+  font-size: 15px;
+  line-height: 1.47;
+  margin: 0;
 `;
 
 const WebcamBox = styled.div`
   display: flex;
   justify-content: center;
   background-color: white;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 8px;
   width: 100%;
-  /* height: 410px; */
-  height: 55vh;
+  height: 360px;
 `;
 
 const Countdown = styled.div`
@@ -540,20 +650,47 @@ const PercentageBarContainer = styled.div`
   padding: 10px;
   background-color: white;
   border-radius: 8px;
-  border: 1px solid #111;
+  border: 2px solid #111;
   gap: 10px;
 `;
 
-const StartBtn = styled.button`
-  width: 100%;
-  height: 52px;
-  background-color: ${COLORS.animal_main};
-  color: white;
-  padding: 13px 0px;
+const PercentageBarContainer2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #e5e5e5;
+  gap: 16px;
+`;
+
+const ResultBtnContainer = styled.footer`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+`;
+const GoMeetingBtn = styled.button`
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  padding: 13px 48px;
   border: none;
+  background-color: #50cd7b;
   border-radius: 26px;
-  font-size: 1.2rem;
-  font-weight: 800;
-  cursor: pointer;
-  margin-top: 56px;
+  font-family: Pretendard;
+  line-height: 1.44;
+`;
+const RetryBtn = styled.button`
+  border: none;
+  background-color: none;
+  text-decoration: underline;
+  font-size: 16px;
+  font-weight: 600;
+  color: #999;
+  background-color: transparent;
+  font-family: Pretendard;
+  margin-bottom: 20px;
 `;
