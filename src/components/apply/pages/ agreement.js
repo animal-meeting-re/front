@@ -66,7 +66,6 @@ const Agreement = () => {
 export default Agreement;
 
 const Container = styled.div`
-  margin-bottom: 248px;
   width: 100%;
 `;
 const Title = styled.div`
@@ -81,7 +80,9 @@ const Title = styled.div`
     margin: 0;
   }
 `;
-const ContentBox = styled.div``;
+const ContentBox = styled.div`
+  margin-bottom: 248px;
+`;
 const EntireBtn = styled.button`
   display: flex;
   justify-content: space-between;
