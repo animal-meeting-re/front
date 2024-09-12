@@ -276,7 +276,7 @@ const AnimalTestPage = () => {
     {
       title: "강아지",
       iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/dog.png"
+        ? process.env.PUBLIC_URL + "img/man-animal/man_dog.png"
         : "img/woman-animal/dog-woman.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
@@ -285,7 +285,7 @@ const AnimalTestPage = () => {
     {
       title: "고양이",
       iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/cat-man.png"
+        ? process.env.PUBLIC_URL + "img/man-animal/man_cat.png"
         : "img/woman-animal/cat-woman.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
@@ -294,7 +294,7 @@ const AnimalTestPage = () => {
     {
       title: gender === "MALE" ? "토끼" : "햄스터",
       iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/rabbit-man.png"
+        ? process.env.PUBLIC_URL + "img/man-animal/man_rabbit.png"
         : "img/woman-animal/hamster.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
@@ -303,7 +303,7 @@ const AnimalTestPage = () => {
     {
       title: gender === "MALE" ? "곰" : "여우",
       iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/bear.png"
+        ? process.env.PUBLIC_URL + "img/man-animal/man_bear.png"
         : "img/woman-animal/fox.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
@@ -312,7 +312,7 @@ const AnimalTestPage = () => {
     {
       title: gender === "MALE" ? "공룡" : "토끼",
       iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/dinosaur.png"
+        ? process.env.PUBLIC_URL + "img/man-animal/man_dino.png"
         : "img/woman-animal/rabbit-woman.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
@@ -321,7 +321,7 @@ const AnimalTestPage = () => {
     {
       title: gender === "MALE" ? "늑대" : "사슴",
       iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/wolf.png"
+        ? process.env.PUBLIC_URL + "img/man-animal/man_wolf.png"
         : "img/woman-animal/deer.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
