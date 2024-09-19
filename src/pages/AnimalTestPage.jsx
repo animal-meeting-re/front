@@ -16,6 +16,10 @@ import useResultStore from "./useResultStore";
 
 const AnimalTestPage = () => {
   const navigate = useNavigate();
+
+  const goChoice = () => {
+    navigate("/choice");
+  };
   const [gender, setGender] = useRecoilState(GENDER);
   const modelURL = useRecoilValue(MODEL_URL);
   const metadataURL = useRecoilValue(METADATA_URL);
@@ -525,7 +529,9 @@ const AnimalTestPage = () => {
       </ScreenContainer>
       {isFinished ? (
         <ResultBtnContainer>
-          <GoMeetingBtn>동물상 이상형과 미팅하러 가기!</GoMeetingBtn>
+          <GoMeetingBtn onClick={goChoice}>
+            동물상 이상형과 미팅하러 가기!
+          </GoMeetingBtn>
           <RetryBtn
             onClick={() => {
               setIsFinished(false);
