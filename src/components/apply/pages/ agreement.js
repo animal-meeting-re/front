@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+
 import checked from "../../../assets/images/checked.png";
 import unChecked from "../../../assets/images/unChecked.png";
 import arrow from "../../../assets/images/rightArrow_gray.png";
@@ -7,15 +9,18 @@ import { useState, useEffect } from "react";
 import { COLORS } from "../../../theme";
 
 import useProgressStore from "../store/progressStore";
+
 const Agreement = () => {
   const [clickAll, setClickAll] = useState(false);
   const [useClicked, setisUseClicked] = useState(false);
   const [collectionClicked, setCollectionClicked] = useState(false);
   const { setProgress } = useProgressStore();
+
   const handleClick = (clickChange) => {
     if (clickAll) setClickAll(false);
     clickChange((e) => !e);
   };
+
   const handleAllClick = () => {
     if (clickAll) {
       setClickAll(false);
@@ -27,10 +32,12 @@ const Agreement = () => {
       setCollectionClicked(true);
     }
   };
+
   useEffect(() => {
     if (useClicked && collectionClicked) setProgress(0, true);
     else setProgress(0, false);
   }, [useClicked, collectionClicked]);
+
   return (
     <Container>
       <Title>
@@ -45,17 +52,22 @@ const Agreement = () => {
 
         <ElseBtn onClick={() => handleClick(setisUseClicked)}>
           <LeftBox>
-            <Required>[필수] </Required>
-            이용약관 동의
-            <Arrow src={arrow} />
+            <StyledLink to="/useinfo" target="_blank">
+              <Required>[필수] </Required>
+              이용약관 동의
+              <Arrow src={arrow} />
+            </StyledLink>
           </LeftBox>
           <Check src={useClicked ? checked : unChecked} />
         </ElseBtn>
+
         <ElseBtn onClick={() => handleClick(setCollectionClicked)}>
           <LeftBox>
-            <Required>[필수] </Required>
-            개인정보 수집 및 이용약관
-            <Arrow src={arrow} />
+            <StyledLink to="/personalinfo" target="_blank">
+              <Required>[필수] </Required>
+              개인정보 수집 및 이용약관
+              <Arrow src={arrow} />
+            </StyledLink>
           </LeftBox>
           <Check src={collectionClicked ? checked : unChecked} />
         </ElseBtn>
@@ -63,11 +75,13 @@ const Agreement = () => {
     </Container>
   );
 };
+
 export default Agreement;
 
 const Container = styled.div`
   width: 100%;
 `;
+
 const Title = styled.div`
   margin-bottom: 20px;
   h3 {
@@ -80,9 +94,11 @@ const Title = styled.div`
     margin: 0;
   }
 `;
+
 const ContentBox = styled.div`
   margin-bottom: 248px;
 `;
+
 const EntireBtn = styled.button`
   display: flex;
   justify-content: space-between;
@@ -106,6 +122,7 @@ const EntireBtn = styled.button`
     height: 28px;
   }
 `;
+
 const ElseBtn = styled.button`
   display: flex;
   justify-content: space-between;
@@ -122,15 +139,28 @@ const Check = styled.img`
   width: 28px;
   height: 28px;
 `;
-const LeftBox = styled.span`
+
+const LeftBox = styled.div`
   font-size: 16px;
 `;
+
 const Required = styled.span`
   color: ${COLORS.animal_main};
   font-weight: 700;
+  margin-right: 3px;
 `;
+
 const Arrow = styled.img`
   width: 4px;
   height: 11px;
   margin-left: 4px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: underline;
+  color: #333333;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
 `;

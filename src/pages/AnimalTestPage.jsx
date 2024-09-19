@@ -46,7 +46,7 @@ const AnimalTestPage = () => {
 
   const [showRotatingImage, setShowRotatingImage] = useState(true);
 
-  const {setUserGender, setAnimal, animal} = useResultStore();
+  const { setUserGender, setAnimal, animal } = useResultStore();
 
   const videoConstraints = {
     facingMode: "user",
@@ -123,13 +123,7 @@ const AnimalTestPage = () => {
 
   useEffect(() => {
     gender && setAnimalData(getAnimalTypeDetailsByIndex(gender, resultIndex));
-
-    if (gender === 'FEMALE') {
-      setUserGender('여자');
-    } else {
-      setUserGender('남자');
-    }
-
+    setUserGender(gender);
   }, [resultIndex]);
 
   function initStatus() {
@@ -285,60 +279,68 @@ const AnimalTestPage = () => {
   const percentageBarsData = [
     {
       title: "강아지",
-      iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/man_dog.png"
-        : "img/woman-animal/dog-woman.png",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_dog.png"
+          : "img/woman-animal/dog-woman.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
-      percentage: bar1Percentage
+      percentage: bar1Percentage,
     },
     {
       title: "고양이",
-      iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/man_cat.png"
-        : "img/woman-animal/cat-woman.png",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_cat.png"
+          : "img/woman-animal/cat-woman.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
-      percentage: bar2Percentage
+      percentage: bar2Percentage,
     },
     {
       title: gender === "MALE" ? "토끼" : "햄스터",
-      iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/man_rabbit.png"
-        : "img/woman-animal/hamster.png",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_rabbit.png"
+          : "img/woman-animal/hamster.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
-      percentage: bar6Percentage
+      percentage: bar6Percentage,
     },
     {
       title: gender === "MALE" ? "곰" : "여우",
-      iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/man_bear.png"
-        : "img/woman-animal/fox.png",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_bear.png"
+          : "img/woman-animal/fox.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
-      percentage: bar3Percentage
+      percentage: bar3Percentage,
     },
     {
       title: gender === "MALE" ? "공룡" : "토끼",
-      iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/man_dino.png"
-        : "img/woman-animal/rabbit-woman.png",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_dino.png"
+          : "img/woman-animal/rabbit-woman.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
-      percentage: bar4Percentage
+      percentage: bar4Percentage,
     },
     {
       title: gender === "MALE" ? "늑대" : "사슴",
-      iconSrc: gender === "MALE"
-        ? process.env.PUBLIC_URL + "img/man-animal/man_wolf.png"
-        : "img/woman-animal/deer.png",
+      iconSrc:
+        gender === "MALE"
+          ? process.env.PUBLIC_URL + "img/man-animal/man_wolf.png"
+          : "img/woman-animal/deer.png",
       bgColor: "#50CD7B",
       bgBaseColor: "#d9d9d9",
-      percentage: bar5Percentage
-    }
+      percentage: bar5Percentage,
+    },
   ];
-  const sortedBars = [...percentageBarsData].sort((a, b) => b.percentage - a.percentage);
+  const sortedBars = [...percentageBarsData].sort(
+    (a, b) => b.percentage - a.percentage
+  );
 
   useEffect(() => {
     if (sortedBars[0]?.title !== animal) {
@@ -372,29 +374,29 @@ const AnimalTestPage = () => {
             {isFinished ? (
               <ResultContainer>
                 <FinishText>측정완료!</FinishText>
-                <ResultImg 
+                <ResultImg
                   src={process.env.PUBLIC_URL + animalData.subImage}
                   alt="동물상 결과 이미지"
                 />
-                
+
                 <ResultText>{animalData && animalData.type}</ResultText>
 
                 <ResultDescriptionWrapper>
                   <ResultDescriptionTitle>동물상 특징</ResultDescriptionTitle>
-                    {animalData &&
-                      animalData.characteristics.map((characteristic, index) => (
-                        <ResultDescription key={index}>{characteristic}</ResultDescription>
-                      ))}
-                  
+                  {animalData &&
+                    animalData.characteristics.map((characteristic, index) => (
+                      <ResultDescription key={index}>
+                        {characteristic}
+                      </ResultDescription>
+                    ))}
                 </ResultDescriptionWrapper>
-                
+
                 <ResultDescriptionWrapper>
                   <ResultDescriptionTitle>대표 연예인</ResultDescriptionTitle>
                   <ResultDescription>
                     {animalData && animalData.celebrities}
                   </ResultDescription>
                 </ResultDescriptionWrapper>
-
               </ResultContainer>
             ) : (
               <WebcamBox>
@@ -415,7 +417,7 @@ const AnimalTestPage = () => {
             {countdown > 0 && <Countdown>{Math.ceil(countdown)}</Countdown>}
             {startMessage && <StartMessage>{startMessage}</StartMessage>}
           </WebcamContainer>
-          {isFinished ? 
+          {isFinished ? (
             <ResultDescriptionWrapper>
               <ResultDescriptionTitle>닮은 동물 비율</ResultDescriptionTitle>
               <PercentageBarContainer2>
@@ -431,114 +433,124 @@ const AnimalTestPage = () => {
                 ))}
               </PercentageBarContainer2>
             </ResultDescriptionWrapper>
-          : <PercentageBarContainer>
-            <div
-              style={{ 
-                display: "flex", 
-                flexDirection: "column", 
-                width: "50%", 
-                gap:'15px' }}
-            >
-              <PercentageBar
-                title="강아지"
-                iconSrc={
-                  gender === "MALE"
-                    ? process.env.PUBLIC_URL + "img/man-animal/man_dog.png"
-                    : "img/woman-animal/dog-woman.png"
-                }
-                bgColor="#50CD7B"
-                bgBaseColor="#d9d9d9"
-                percentage={bar1Percentage}
-              />
-              <PercentageBar
-                title="고양이"
-                iconSrc={
-                  gender === "MALE"
-                    ? process.env.PUBLIC_URL + "img/man-animal/man_cat.png"
-                    : "img/woman-animal/cat-woman.png"
-                }
-                bgColor="#50CD7B"
-                bgBaseColor="#d9d9d9"
-                percentage={bar2Percentage}
-              />
-              <PercentageBar
-                title={gender === "MALE" ? "토끼" : "햄스터"}
-                iconSrc={
-                  gender === "MALE"
-                    ? process.env.PUBLIC_URL + "img/man-animal/man_rabbit.png"
-                    : "img/woman-animal/hamster.png"
-                }
-                bgColor="#50CD7B"
-                bgBaseColor="#d9d9d9"
-                percentage={bar6Percentage}
-              />
-            </div>
-            <div
-              style={{ 
-                display: "flex", 
-                flexDirection: "column", 
-                width: "50%", 
-                gap:'15px' }}
-            >
-              <PercentageBar
-                title={gender === "MALE" ? "곰" : "여우"}
-                iconSrc={
-                  gender === "MALE"
-                    ? process.env.PUBLIC_URL + "img/man-animal/man_bear.png"
-                    : "img/woman-animal/fox.png"
-                }
-                bgColor="#50CD7B"
-                bgBaseColor="#d9d9d9"
-                percentage={bar3Percentage}
-              />
-              <PercentageBar
-                title={gender === "MALE" ? "공룡" : "토끼"}
-                iconSrc={
-                  gender === "MALE"
-                    ? process.env.PUBLIC_URL + "img/man-animal/man_dino.png"
-                    : "img/woman-animal/rabbit-woman.png"
-                }
-                bgColor="#50CD7B"
-                bgBaseColor="#d9d9d9"
-                percentage={bar4Percentage}
-              />
-              <PercentageBar
-                title={gender === "MALE" ? "늑대" : "사슴"}
-                iconSrc={
-                  gender === "MALE"
-                    ? process.env.PUBLIC_URL + "img/man-animal/man_wolf.png"
-                    : "img/woman-animal/deer.png"
-                }
-                bgColor="#50CD7B"
-                bgBaseColor="#d9d9d9"
-                percentage={bar5Percentage}
-              />
-            </div>
-          </PercentageBarContainer>}
-          
+          ) : (
+            <PercentageBarContainer>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "50%",
+                  gap: "15px",
+                }}
+              >
+                <PercentageBar
+                  title="강아지"
+                  iconSrc={
+                    gender === "MALE"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_dog.png"
+                      : "img/woman-animal/dog-woman.png"
+                  }
+                  bgColor="#50CD7B"
+                  bgBaseColor="#d9d9d9"
+                  percentage={bar1Percentage}
+                />
+                <PercentageBar
+                  title="고양이"
+                  iconSrc={
+                    gender === "MALE"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_cat.png"
+                      : "img/woman-animal/cat-woman.png"
+                  }
+                  bgColor="#50CD7B"
+                  bgBaseColor="#d9d9d9"
+                  percentage={bar2Percentage}
+                />
+                <PercentageBar
+                  title={gender === "MALE" ? "토끼" : "햄스터"}
+                  iconSrc={
+                    gender === "MALE"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_rabbit.png"
+                      : "img/woman-animal/hamster.png"
+                  }
+                  bgColor="#50CD7B"
+                  bgBaseColor="#d9d9d9"
+                  percentage={bar6Percentage}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "50%",
+                  gap: "15px",
+                }}
+              >
+                <PercentageBar
+                  title={gender === "MALE" ? "곰" : "여우"}
+                  iconSrc={
+                    gender === "MALE"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_bear.png"
+                      : "img/woman-animal/fox.png"
+                  }
+                  bgColor="#50CD7B"
+                  bgBaseColor="#d9d9d9"
+                  percentage={bar3Percentage}
+                />
+                <PercentageBar
+                  title={gender === "MALE" ? "공룡" : "토끼"}
+                  iconSrc={
+                    gender === "MALE"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_dino.png"
+                      : "img/woman-animal/rabbit-woman.png"
+                  }
+                  bgColor="#50CD7B"
+                  bgBaseColor="#d9d9d9"
+                  percentage={bar4Percentage}
+                />
+                <PercentageBar
+                  title={gender === "MALE" ? "늑대" : "사슴"}
+                  iconSrc={
+                    gender === "MALE"
+                      ? process.env.PUBLIC_URL + "img/man-animal/man_wolf.png"
+                      : "img/woman-animal/deer.png"
+                  }
+                  bgColor="#50CD7B"
+                  bgBaseColor="#d9d9d9"
+                  percentage={bar5Percentage}
+                />
+              </div>
+            </PercentageBarContainer>
+          )}
         </CenterContainer>
       </ScreenContainer>
-      {isFinished ? 
-      <ResultBtnContainer>
-        <GoMeetingBtn>동물상 이상형과 미팅하러 가기!</GoMeetingBtn>
-        <RetryBtn onClick={() => {setIsFinished(false)}}>동물상 다시 측정하기</RetryBtn>
-      </ResultBtnContainer>
-      :
-      <div style={{ marginRight: "5px" }}>
-        <GradientButton
-          ref={startButtonRef}
-          onClick={() => {
-            setIsFinished(false);
-            startPredicting();
-          }}
-          content="시작"
-          buttonStyle={{
-            fontSize: "1rem",
-            fontWeight: "800",
-            margin: 'auto'
-          }}
-        />
-      </div>}
+      {isFinished ? (
+        <ResultBtnContainer>
+          <GoMeetingBtn>동물상 이상형과 미팅하러 가기!</GoMeetingBtn>
+          <RetryBtn
+            onClick={() => {
+              setIsFinished(false);
+            }}
+          >
+            동물상 다시 측정하기
+          </RetryBtn>
+        </ResultBtnContainer>
+      ) : (
+        <div style={{ marginRight: "5px" }}>
+          <GradientButton
+            ref={startButtonRef}
+            onClick={() => {
+              setIsFinished(false);
+              startPredicting();
+            }}
+            content="시작"
+            buttonStyle={{
+              fontSize: "1rem",
+              fontWeight: "800",
+              margin: "auto",
+            }}
+          />
+        </div>
+      )}
     </MainContainer>
   );
 };
@@ -661,7 +673,7 @@ const PercentageBarContainer2 = styled.div`
   margin-top: 12px;
   padding: 16px;
   border-radius: 16px;
-  border: 1px solid #E5E5E5;
+  border: 1px solid #e5e5e5;
   gap: 16px;
 `;
 
@@ -674,10 +686,10 @@ const ResultBtnContainer = styled.footer`
 const GoMeetingBtn = styled.button`
   font-size: 18px;
   font-weight: bold;
-  color: #FFF;
+  color: #fff;
   padding: 13px 48px;
   border: none;
-  background-color: #50CD7B;
+  background-color: #50cd7b;
   border-radius: 26px;
   font-family: Pretendard;
   line-height: 1.44;

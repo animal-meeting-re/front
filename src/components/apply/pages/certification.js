@@ -1,12 +1,60 @@
 import styled from "styled-components";
 
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { COLORS } from "../../../theme";
 
+import { SendAuthNum } from "../apis/sendAuthNum";
+import { CheckAuthNum } from "../apis/checkAuthNum";
+
 import useProgressStore from "../store/progressStore";
+import useResultStore from "../../../pages/useResultStore";
 const Certification = () => {
   const { setProgress } = useProgressStore();
+  const { setPhoneNumber } = useResultStore();
 
+  const phoneNumberRef = useRef(null);
+  const authCodeRef = useRef(null);
+  const [isPhoneFalse, setIsPhoneFalse] = useState(null);
+  const [isCheckNumFalse, setIsCheckNumFalse] = useState(null);
+  const [authCode, setAuthCode] = useState("");
+  const validatePhoneNum = (phoneNumber) => {
+    const isValid = phoneNumber.length === 11 && phoneNumber.startsWith("010");
+    return isValid;
+  };
+
+  const handleSendNum = async () => {
+    const phoneNumber = phoneNumberRef.current.value;
+    if (!validatePhoneNum(phoneNumber)) {
+      setIsPhoneFalse(true);
+    } else {
+      setIsPhoneFalse(false);
+      setPhoneNumber(phoneNumber);
+      try {
+        const response = await SendAuthNum(phoneNumber);
+        console.log("응답:", response);
+      } catch (error) {
+        console.log("코드 요청 중 오류 발생: ", error);
+      }
+    }
+  };
+  const handleAuthCodeChange = (event) => {
+    setAuthCode(event.target.value);
+  };
+  const handleCheckNum = async () => {
+    const authCode = authCodeRef.current.value;
+    if (authCode.length === 4) {
+      try {
+        const response = await CheckAuthNum(authCode);
+        console.log("응답:", response.data.data.isPassed);
+        if (response.data.data.isPassed) {
+          setIsCheckNumFalse(false);
+          setProgress(1, true);
+        } else setIsCheckNumFalse(true);
+      } catch (error) {
+        console.log("코드 요청 중 오류 발생: ", error);
+      }
+    }
+  };
   return (
     <Container>
       <Title>
@@ -15,17 +63,30 @@ const Certification = () => {
       </Title>
       <ContentBox>
         <Box>
-          <Input placeholder="전화번호 - 없이 입력" />
-          <Btn size="110px" value="send">
+          <Input ref={phoneNumberRef} placeholder="전화번호 - 없이 입력" />
+          <Btn size="110px" onClick={handleSendNum} isActive={true}>
             인증번호 전송
           </Btn>
         </Box>
+        {isPhoneFalse && <WranMSG>*전화번호 11자리를 입력해주세요</WranMSG>}
         <Box>
-          <Input placeholder="인증번호 4자리를 입력해주세요" />
-          <Btn size="56px" value="check">
+          <Input
+            ref={authCodeRef}
+            placeholder="인증번호 4자리를 입력해주세요"
+            value={authCode}
+            onChange={handleAuthCodeChange}
+          />
+          <Btn
+            size="56px"
+            onClick={handleCheckNum}
+            isActive={authCode.length === 4}
+          >
             확인
           </Btn>
         </Box>
+        {isCheckNumFalse && (
+          <WranMSG>*인증번호가 정확하지 않습니다. 다시 시도해주세요.</WranMSG>
+        )}
       </ContentBox>
     </Container>
   );
@@ -73,11 +134,17 @@ const Input = styled.input`
 `;
 const Btn = styled.button`
   background-color: ${(props) =>
-    props.value === "send" ? `${COLORS.animal_main}` : `${COLORS.line_02}`};
+    props.isActive ? `${COLORS.animal_main}` : `${COLORS.line_02}`};
   height: 36px;
   border-radius: 35px;
   color: ${COLORS.back_02};
   border: none;
   font-size: 15px;
   width: ${(props) => props.size};
+`;
+
+const WranMSG = styled.div`
+  color: #ff4b4b;
+  font-size: 14px;
+  margin: 2px 0 8px 8px;
 `;
