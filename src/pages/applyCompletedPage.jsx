@@ -1,7 +1,14 @@
 import styled from "styled-components";
 import { Header } from "../components/header";
 import { COLORS } from "../theme";
+import { useNavigate } from "react-router-dom";
+
 const ApplyCompletedPage = () => {
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/");
+  };
   return (
     <Container>
       <Header />
@@ -14,7 +21,7 @@ const ApplyCompletedPage = () => {
         </Content>
       </InnerContainer>
       <BottomBox>
-        <Button>처음으로 돌아가기</Button>
+        <Button onClick={goHome}>처음으로 돌아가기</Button>
       </BottomBox>
     </Container>
   );
