@@ -16,9 +16,6 @@ const EnterInfo = () => {
   const kakaoID = useRef(null);
   const selectRef1 = useRef(null);
   const selectRef2 = useRef(null);
-  // useEffect(() => {
-  //   setProgress(2, true);
-  // }, []);
 
   const changeAnimalToENG = (ani) => {
     switch (ani) {
