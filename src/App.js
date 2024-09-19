@@ -5,7 +5,11 @@ import AnimalTestPage from "./pages/AnimalTestPage";
 import GuidePage from "./pages/GuidePage.jsx";
 import { LandingPage } from "./pages/landing-page.js";
 import SettingPage from "./pages/settingPage.jsx";
-
+import MeetingChoice from "./pages/meetingChoice.jsx";
+import ApplyPage from "./pages/applyPage.jsx";
+import ApplyCompletedPage from "./pages/applyCompletedPage.jsx";
+import Agree1 from "./constants/privacyPolicy/Agree1.js";
+import Agree2 from "./constants/privacyPolicy/Agree2.js";
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +25,12 @@ function App() {
             </BezierProvider>
           }
         />
+        <Route path="/choice" element={<MeetingChoice />} />
+        <Route path="/apply" element={<ApplyPage />} />
+        <Route path="/completed" element={<ApplyCompletedPage />} />
+
+        <Route path="/useinfo" element={<Agree2 />} />
+        <Route path="/personalinfo" element={<Agree1 />} />
       </Routes>
     </BrowserRouter>
   );

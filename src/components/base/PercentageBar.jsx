@@ -42,6 +42,9 @@ const Icon = styled.img`
   width: 20px;
   height: 20px;
   margin-right: 10px;
+  border-radius: 50%;
+  border: 0.3px solid #000;
+  padding: 1px;
 `;
 
 const Content = styled.div`

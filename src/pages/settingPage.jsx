@@ -72,69 +72,72 @@ const SettingPage = () => {
   };
 
   return (
-    <Container>
-      <Header title="미동숲" />
-      <Choose>성별을 선택해 주세요</Choose>
-      <GenderContainer>
-        <Gender
-          onClick={() => handleGenderSelect("MALE")}
-          className="pointer selected-gender-text"
-        >
-          <GenderImg src={Male} />
-          <GenderText>남자</GenderText>
-          <CheckmarkImg src={selectedGender === "MALE" ? Checked : UnChecked} />
-        </Gender>
-        <Gender
-          onClick={() => handleGenderSelect("FEMALE")}
-          className="pointer selected-gender-text"
-        >
-          <GenderImg src={Female} />
-          <GenderText>여자</GenderText>
-          <CheckmarkImg
-            src={selectedGender === "FEMALE" ? Checked : UnChecked}
-          />
-        </Gender>
-      </GenderContainer>
-      <ProContainer>
-        <ButtonContainer>
-          <BackButton onClick={handleBack} disabled={currentStep === 1}>
-            뒤로
-          </BackButton>
-          <NextButton onClick={handleNext} disabled={currentStep === 3}>
-            다음
-          </NextButton>
-        </ButtonContainer>
-        <ProgressBar>
-          <Progress width={(currentStep / 3) * 100 + "%"} />
-        </ProgressBar>
-      </ProContainer>
-    </Container>
+    <>
+      <Header />
+      <Container2>
+        <Choose>성별을 알려주세요!</Choose>
+        <Choose2>성별에 따라 측정 결과가 달라질 수 있어요</Choose2>
+        <GenderContainer>
+          <Gender
+            onClick={() => handleGenderSelect("MALE")}
+            className="pointer selected-gender-text"
+          >
+            <GenderImg src={Male} />
+            <GenderText>남자</GenderText>
+            <CheckmarkImg
+              src={selectedGender === "MALE" ? Checked : UnChecked}
+            />
+          </Gender>
+          <Gender
+            onClick={() => handleGenderSelect("FEMALE")}
+            className="pointer selected-gender-text"
+          >
+            <GenderImg src={Female} />
+            <GenderText>여자</GenderText>
+            <CheckmarkImg
+              src={selectedGender === "FEMALE" ? Checked : UnChecked}
+            />
+          </Gender>
+        </GenderContainer>
+        <NextButton onClick={handleNext} disabled={currentStep === 3}>
+          다음
+        </NextButton>
+      </Container2>
+    </>
   );
 };
 
 export default SettingPage;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const Container2 = styled.div`
+  padding: 0px 24px;
 `;
 
 const Choose = styled.p`
-  font-family: "jalnan";
+  font-family: "pretendard";
   font-size: 1.3rem;
+  font-weight: 800;
+  margin: 23px 0px 0px 0px;
+`;
+const Choose2 = styled.p`
+  font-family: "pretendard";
+  font-size: 1rem;
+  margin-top: 4px;
+  color: ${COLORS.font_03};
 `;
 
 const GenderContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
-  gap: 25px;
+  justify-content: space-between;
+  /* gap: 25px; */
+  margin-top: 27px;
 `;
 
 const Gender = styled.button`
-  width: 151px;
-  height: 174px;
+  width: 45%;
+  height: 25vh;
+  color: black;
   border-radius: 40px;
   border: 1px solid var(--line_02, #e5e5e5);
   background: var(--back_02, #fff);
@@ -167,67 +170,24 @@ const CheckmarkImg = styled.img`
   right: 20px;
 `;
 
-const ProgressBar = styled.div`
-  position: relative;
-  height: 5px;
-  width: 80%;
-  background-color: #d3d3d3;
-  margin: 20px 0;
-`;
-
-const Progress = styled.div`
-  height: 5px;
-  background-color: ${COLORS.main};
-  width: ${(props) => props.width};
-  transition: width 0.3s ease-in-out;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
-  margin-top: 20px;
-`;
-
-const BackButton = styled.button`
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border: 1px solid #e5e5e5;
-  border-radius: 20px;
-  padding: 5px 15px;
-  width: 60px;
-  height: 36px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: black;
-  cursor: pointer;
-  &:disabled {
-    cursor: not-allowed;
-  }
-`;
-
 const NextButton = styled.button`
+  width: 100%;
+  height: 52px;
   display: flex;
   align-items: center;
-  background-color: #a1e9ba;
+  justify-content: center;
+  background-color: ${COLORS.animal_main};
+  color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 26px;
   padding: 5px 15px;
-  font-size: 1rem;
+  font-size: 1.175rem;
+  font-weight: 800;
   color: white;
   cursor: pointer;
+  margin-top: 30vh;
   &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
-`;
-
-const ProContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
 `;
