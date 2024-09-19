@@ -30,12 +30,12 @@ const NoticeBoard = ( ) => {
                 <div className="noticeboard-man">
                         남자
                         <div className="man-animal-wrapper"> 
-                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/dog.png`}/>
-                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/cat-man.png`}/>
-                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/wolf.png`}/>
-                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/rabbit-man.png`}/>
-                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/dinosaur.png`}/>
-                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/bear.png`}/>
+                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/man_dog.png`}/>
+                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/man_cat.png`}/>
+                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/man_wolf.png`}/>
+                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/man_rabbit.png`}/>
+                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/man_dino.png`}/>
+                        <img src={`${process.env.PUBLIC_URL}/img/man-animal/man_bear.png`}/>
                         </div>    
                 </div>
             </div>

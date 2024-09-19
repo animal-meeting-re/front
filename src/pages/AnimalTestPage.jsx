@@ -12,6 +12,7 @@ import { getAnimalTypeDetailsByIndex } from "../data/animalData";
 import { fetchFile } from "../utils/FileUtil";
 import styled from "styled-components";
 import { Header } from "../components/header";
+import useResultStore from "./useResultStore";
 
 const AnimalTestPage = () => {
   const navigate = useNavigate();
@@ -44,6 +45,8 @@ const AnimalTestPage = () => {
   const [animalData, setAnimalData] = useState();
 
   const [showRotatingImage, setShowRotatingImage] = useState(true);
+
+  const {setUserGender, setAnimal, animal} = useResultStore();
 
   const videoConstraints = {
     facingMode: "user",
@@ -120,6 +123,13 @@ const AnimalTestPage = () => {
 
   useEffect(() => {
     gender && setAnimalData(getAnimalTypeDetailsByIndex(gender, resultIndex));
+
+    if (gender === 'FEMALE') {
+      setUserGender('여자');
+    } else {
+      setUserGender('남자');
+    }
+
   }, [resultIndex]);
 
   function initStatus() {
@@ -329,6 +339,13 @@ const AnimalTestPage = () => {
     }
   ];
   const sortedBars = [...percentageBarsData].sort((a, b) => b.percentage - a.percentage);
+
+  useEffect(() => {
+    if (sortedBars[0]?.title !== animal) {
+      setAnimal(sortedBars[0].title);
+    }
+    console.log(animal);
+  }, [sortedBars, animal]);
 
   return (
     <MainContainer ref={focusRef} tabIndex={-1}>
