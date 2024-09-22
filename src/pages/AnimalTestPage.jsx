@@ -525,38 +525,38 @@ const AnimalTestPage = () => {
               </div>
             </PercentageBarContainer>
           )}
+          {isFinished ? (
+            <ResultBtnContainer>
+              <GoMeetingBtn onClick={goChoice}>
+                동물상 이상형과 미팅하러 가기!
+              </GoMeetingBtn>
+              <RetryBtn
+                onClick={() => {
+                  setIsFinished(false);
+                }}
+              >
+                동물상 다시 측정하기
+              </RetryBtn>
+            </ResultBtnContainer>
+          ) : (
+            <div style={{ marginTop: "56px" }}>
+              <GradientButton
+                ref={startButtonRef}
+                onClick={() => {
+                  setIsFinished(false);
+                  startPredicting();
+                }}
+                content="시작"
+                buttonStyle={{
+                  fontSize: "1rem",
+                  fontWeight: "800",
+                  margin: "auto",
+                }}
+              />
+            </div>
+          )}
         </CenterContainer>
       </ScreenContainer>
-      {isFinished ? (
-        <ResultBtnContainer>
-          <GoMeetingBtn onClick={goChoice}>
-            동물상 이상형과 미팅하러 가기!
-          </GoMeetingBtn>
-          <RetryBtn
-            onClick={() => {
-              setIsFinished(false);
-            }}
-          >
-            동물상 다시 측정하기
-          </RetryBtn>
-        </ResultBtnContainer>
-      ) : (
-        <div style={{ marginRight: "5px" }}>
-          <GradientButton
-            ref={startButtonRef}
-            onClick={() => {
-              setIsFinished(false);
-              startPredicting();
-            }}
-            content="시작"
-            buttonStyle={{
-              fontSize: "1rem",
-              fontWeight: "800",
-              margin: "auto",
-            }}
-          />
-        </div>
-      )}
     </MainContainer>
   );
 };
@@ -572,7 +572,7 @@ const MainContainer = styled.div`
 `;
 
 const ScreenContainer = styled.div`
-  max-width: 400px;
+  /* max-width: 400px; */
   margin: auto;
 `;
 
