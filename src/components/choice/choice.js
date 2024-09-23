@@ -10,14 +10,15 @@ import unChecked from "../../assets/images/unChecked.png";
 import { partyContent, meetingContent } from "./infom";
 
 import { useNavigate } from "react-router-dom";
-
+import useApplyStore from "../apply/store/applyStore";
 const Choice = () => {
   const navigate = useNavigate();
   const [clickState, setClickState] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-
+  const { setChoiced } = useApplyStore();
   const handleChoice = (state) => {
     setClickState(state);
+    setChoiced(state);
     setIsVisible(true);
   };
   const moveToNext = () => {
