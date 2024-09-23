@@ -7,7 +7,7 @@ export const CheckAuthNum = async (num) => {
   };
   try {
     const response = await axios.post(
-      `${BACK_BASE_URL}/users/auth/phone/varification`,
+      `${process.env.REACT_APP_BASE_URL}/users/auth/phone/varification`,
       requestData,
       {
         headers: {

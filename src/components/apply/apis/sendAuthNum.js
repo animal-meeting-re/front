@@ -7,7 +7,7 @@ export const SendAuthNum = async (phoneNum) => {
   };
   try {
     const response = await axios.post(
-      `${BACK_BASE_URL}/users/auth/phone/request-code`,
+      `${process.env.REACT_APP_BASE_URL}/users/auth/phone/request-code`,
       requestData,
       {
         headers: {
