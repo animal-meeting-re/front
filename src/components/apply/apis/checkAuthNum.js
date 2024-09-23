@@ -1,6 +1,6 @@
 import axios from "axios";
 const BACK_BASE_URL = process.env.REACT_APP_BASE_URL;
-
+console.log(BACK_BASE_URL);
 export const CheckAuthNum = async (num) => {
   const requestData = {
     authKey: num,
