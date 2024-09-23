@@ -52,15 +52,11 @@ const Agreement = () => {
 
         <ElseBtn onClick={() => handleClick(setisUseClicked)}>
           <LeftBox>
-            <StyledA
-              href="https://forms.gle/L9D9zNB7o96hAk1B9"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <StyledLink to="/useinfo" target="_blank">
               <Required>[필수] </Required>
               이용약관 동의
               <Arrow src={arrow} />
-            </StyledA>
+            </StyledLink>
           </LeftBox>
           <Check src={useClicked ? checked : unChecked} />
         </ElseBtn>
@@ -161,14 +157,6 @@ const Arrow = styled.img`
 `;
 
 const StyledLink = styled(Link)`
-  text-decoration: underline;
-  color: #333333;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-decoration: none;
-`;
-const StyledA = styled.a`
   text-decoration: underline;
   color: #333333;
   display: flex;
