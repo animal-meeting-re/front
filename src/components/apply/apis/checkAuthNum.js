@@ -7,7 +7,8 @@ export const CheckAuthNum = async (num) => {
   };
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_BASE_URL}/users/auth/phone/varification`,
+      // `${process.env.REACT_APP_BASE_URL}/users/auth/phone/varification`,
+      "https://hong-nuri.shop/api/v2/users/auth/phone/request-code",
       requestData,
       {
         headers: {
